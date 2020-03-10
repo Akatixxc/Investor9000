@@ -38,13 +38,14 @@ Tyylittelyyn:
 
 [Asenna yarn](https://classic.yarnpkg.com/en/docs/install#windows-stable)
 
-yarn install
-yarn dev
+1. yarn install
+
+Tee root kansioon .env tiedosto ja lisää sinne sisällöt .envBase tiedostosta ja lisää finnhubin api key paikalleen.
+
+2. yarn dev
 
 muut mahdolliset komennot löytyvät package.jsonista kohdasta "scripts"
 mahdollista myös käyttää npm mutta selkeempää jos kaikki käyttää samaa
-
-Tee root kansioon .env tiedosto ja lisää sinne sisällöt .envBase tiedostosta ja lisää finnhubin api key paikalleen.
 
 ## Yleistä
 
@@ -56,3 +57,18 @@ Todo+ plugarin avulla laitetaan kehitysideoita todo.todo tiedostoon
 ## Mahdollisia kirjastoja, voidaan käyttää muitakin
 
 [Material-ui](https://material-ui.com/) - [Lisäinfoa Material desingin periaattesta löytyy täältä](https://material.io/)
+
+## Palaverit
+
+9.3
+
+-   Projektin ideointia valitsimme projektiksi investointi sovelluksen
+-   Sovimme, että rasmus tekee pohjan ja jatketaan siitä.
+
+10.3
+
+-   Projektin pohja valmis - edetään seuraavasti:
+-   Andreas suunnittelee apin käyttöä sekä kannan toteutusta
+-   Rasmus koodaa käyttäjän authentikoinnin
+-   Milla suunnittelee sovelluksen ulkonäköä sekä toimivuutta
+-   Tarkastetaan tilanne uudelleen kun kaikki on päässyt vauhtiin

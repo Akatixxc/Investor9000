@@ -4,6 +4,7 @@ const FinnHub = require('./api/finnhub');
 const app = express();
 
 app.use(express.static('dist'));
+
 app.get('/api/getStockExchange', (req, res) => {
     FinnHub.getDataFromFinnhub('/stock/exchange', null).then(result => {
         res.status(200)

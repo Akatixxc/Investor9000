@@ -6,4 +6,12 @@ Aloitus:
     ✔ Serverin aloitus ja ensimmäinen rajapinta @started(20-03-10 15:34) @done(20-03-10 17:41) @lasted(2h7m33s)
 
 Bugit ja outoudet:
-    ☐ apiHelper .json() kutsu ei palauta jsonia vaan palauttaa tekstiä
+    ☐ apiHelper .json() kutsu ei palauta jsonia vaan palauttaa tekstiä'
+
+Toteutettavat asiat:
+
+    ☐ Login sivu ja käyttäjän talletus kantaan
+
+    ☐ Osakkeiden mallinnus
+
+    ☐ Frontin ja näkymien suunnittelu
