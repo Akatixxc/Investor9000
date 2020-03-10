@@ -44,7 +44,7 @@ yarn dev
 muut mahdolliset komennot löytyvät package.jsonista kohdasta "scripts"
 mahdollista myös käyttää npm mutta selkeempää jos kaikki käyttää samaa
 
-Lisää finnhub API Key .env tiedostoon
+Tee root kansioon .env tiedosto ja lisää sinne sisällöt .envBase tiedostosta ja lisää finnhubin api key paikalleen.
 
 ## Yleistä
 
