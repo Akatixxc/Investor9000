@@ -1,0 +1,9 @@
+Aloitus:
+    ✔ Pohja @done(20-03-10 15:31)
+    ✔ Eslint ja Prettier @done(20-03-10 15:32)
+
+    Toteutetaan yksinkertainen api kutsu finnhubiin, esimerkin omaisesti
+    ✔ Serverin aloitus ja ensimmäinen rajapinta @started(20-03-10 15:34) @done(20-03-10 17:41) @lasted(2h7m33s)
+
+Bugit ja outoudet:
+    ☐ apiHelper .json() kutsu ei palauta jsonia vaan palauttaa tekstiä
