@@ -1,4 +1,4 @@
-#Soveltava projekti, Rasmus Haavisto, Andreas Säilä, Milla Sipilä
+# Soveltava projekti, Rasmus Haavisto, Andreas Säilä, Milla Sipilä
 
 ## Vaaditut VSCode plugarit
 
