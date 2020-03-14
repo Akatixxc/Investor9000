@@ -15,3 +15,9 @@ Toteutettavat asiat:
     ☐ Osakkeiden mallinnus
 
     ☐ Frontin ja näkymien suunnittelu
+
+Login:
+    ☐ JWT kekseihin
+    ☐ Database
+    ☐ Salasanan hash + suola
+    ☐ login route ja react-router
