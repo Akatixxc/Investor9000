@@ -9,6 +9,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, outputDirectory),
         filename: 'bundle.js',
+        publicPath: '/',
     },
     module: {
         rules: [
@@ -54,6 +55,7 @@ module.exports = {
             warnings: false,
             publicPath: false,
         },
+        historyApiFallback: true,
     },
     plugins: [
         new CleanWebpackPlugin({ outputDirectory }),

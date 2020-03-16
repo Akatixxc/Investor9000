@@ -23,15 +23,25 @@ const users = [
 ];
 
 app.get('/api/getStockExchange', middlewares.withAuth, (req, res) => {
+    //with auth middlewaresssa asetetaan käyttäjä jota voidaan käyttää näin
     const user = req.user;
-    console.log(user);
     FinnHub.getDataFromFinnhub('/stock/exchange', null).then(result => {
-        res.status(200).json(result);
+        res.json(result);
     });
 });
 
-app.get('/api/checkToken', middlewares.withAuth, function(req, res) {
-    res.send(200).json('ok');
+app.get('/api/checkToken', function(req, res) {
+    const authHeader = req.cookies.jwtToken;
+    if (authHeader) {
+        jwt.verify(authHeader, config.jwtTokenSecret, (err, user) => {
+            if (err) {
+                return res.json(false);
+            }
+            res.json(true);
+        });
+    } else {
+        res.json(false);
+    }
 });
 
 app.post('/api/login', (req, res) => {

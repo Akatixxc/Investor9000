@@ -7,13 +7,13 @@ const withAuth = (req, res, next) => {
     if (authHeader) {
         jwt.verify(authHeader, config.jwtTokenSecret, (err, user) => {
             if (err) {
-                return res.send(403).json('JWT ei validi');
+                return res.status(401).json('JWT ei validi');
             }
             req.user = user;
             next();
         });
     } else {
-        res.send(401).json('JWT puuttuu');
+        res.status(401).json('JWT puuttuu');
     }
 };
 
