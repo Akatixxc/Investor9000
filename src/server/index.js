@@ -30,7 +30,7 @@ app.get('/api/getStockExchange', middlewares.withAuth, (req, res) => {
     });
 });
 
-app.get('/api/checkToken', function(req, res) {
+app.get('/api/checkToken', (req, res) => {
     const authHeader = req.cookies.jwtToken;
     if (authHeader) {
         jwt.verify(authHeader, config.jwtTokenSecret, (err, user) => {
@@ -58,6 +58,10 @@ app.post('/api/login', (req, res) => {
     } else {
         res.json('Käyttäjänimi tai salasana väärin');
     }
+});
+
+app.get('/api/logout', middlewares.withAuth, (req, res) => {
+    res.clearCookie('jwtToken').json('success');
 });
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));

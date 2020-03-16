@@ -6,7 +6,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import { CircularProgress } from '@material-ui/core';
+import history from './history';
 
 export default class StockExhanges extends Component {
     constructor() {
@@ -26,6 +28,14 @@ export default class StockExhanges extends Component {
         const { stockExhange } = this.state;
         return (
             <div>
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        get(`/api/logout`, null, true).then(history.push('/login'));
+                    }}
+                >
+                    Logout
+                </Button>
                 {stockExhange ? (
                     <TableContainer component={Paper}>
                         <Table aria-label="simple table">

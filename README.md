@@ -51,6 +51,8 @@ mahdollista myös käyttää npm mutta selkeempää jos kaikki käyttää samaa
 
 Seurataan backin puolella seuraavaa ideologiaa ja struktuuria:
 [Nodejs Project structure](https://softwareontheroad.com/ideal-nodejs-project-structure/)
+Käyttäjän authentikaatioon käytetään JWT tokeneita.
+[JWT.io](https://jwt.io/)
 
 Todo+ plugarin avulla laitetaan kehitysideoita todo.todo tiedostoon
 
