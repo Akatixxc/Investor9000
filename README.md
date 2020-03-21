@@ -56,6 +56,39 @@ Käyttäjän authentikaatioon käytetään JWT tokeneita.
 
 Todo+ plugarin avulla laitetaan kehitysideoita todo.todo tiedostoon
 
+## Database
+
+[MariaDB](https://mariadb.com/) lataa & asenna
+[node library mariadb:lle](https://mariadb.com/kb/en/getting-started-with-the-nodejs-connector/)
+[Hyödyllinen GUI databasen käyttöä auttamaan, HeidiSQL](https://www.heidisql.com/)
+
+Kun olet asentanut kannan, tee sinne database, itse nimesin oman "investor"
+Databasessa aja SQL query:
+
+```SQL
+CREATE TABLE `user` (
+`id` INT(11) NOT NULL AUTO_INCREMENT,
+`username` TEXT NOT NULL DEFAULT '',
+`password` TEXT NOT NULL DEFAULT '',
+PRIMARY KEY (`id`)
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=0
+;
+```
+
+## ENV tiedosto
+
+.env tiedostoon tulee määrittää seuraavat arvot:
+
+FINNHUB_KEY= oma api-key finnhubiin, löytyy finnhubin sivulta
+JWT_TOKEN_SECRET= string jonka perusteella generoidaan salasana hashit, aka hakkaa päätäsi näppäimistöön ja generoi näin random string
+DB_HOST= localhost, ellei database ole jollain muulla koneella
+DB_NAME= databasen nimi (itse nimesin investor)
+DB_USER= käyttäjä, luultavasti root
+DB_PASSWORD= käyttäjän salasana, kysyy asentaessa
+
 ## Mahdollisia kirjastoja, voidaan käyttää muitakin
 
 [Material-ui](https://material-ui.com/) - [Lisäinfoa Material desingin periaattesta löytyy täältä](https://material.io/)

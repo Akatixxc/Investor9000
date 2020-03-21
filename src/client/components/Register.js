@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
-import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { post } from '../api/apiHelper';
 
-function Login() {
+function Register() {
     const history = useHistory();
     const location = useLocation();
 
@@ -13,23 +13,20 @@ function Login() {
     });
     const { username, password } = inputs;
 
-    //const [username, setUsername] = useState('rasmus');
-    //const [password, setPassword] = useState('password');
-
-    const handleLogin = e => {
+    const handleRegister = e => {
         //disabloidaan default event, eli sivun täysi refresh
         e.preventDefault();
 
-        post('/api/login', { body: JSON.stringify({ username: username, password: password }) }, false)
+        post('/api/reqister', { body: JSON.stringify({ username: username, password: password }) }, false)
             .then(res => {
                 const { from } = location.state || { from: { pathname: '/' } };
                 if (res === 'success') {
                     history.replace(from);
                 } else {
-                    console.log('Login virhekäsittely');
+                    console.log('Register virhekäsittely');
                 }
             })
-            .catch(err => console.log(`Login failed: ${err}`));
+            .catch(err => console.log(`Registeration failed: ${err}`));
     };
 
     function handleChange(e) {
@@ -39,19 +36,18 @@ function Login() {
 
     return (
         <div>
+            <h1>Register as a new User</h1>
             <form noValidate autoComplete="off">
                 <TextField id="username" name="username" label="Username" value={username} onChange={handleChange} />
                 <br />
                 <TextField id="password" name="password" label="Password" type="password" value={password} onChange={handleChange} />
                 <br />
-                <Button variant="contained" onClick={handleLogin}>
-                    Submit
+                <Button variant="contained" onClick={handleRegister}>
+                    Register
                 </Button>
-                <br />
-                <Link to="/register">Not yet a user?</Link>
             </form>
         </div>
     );
 }
 
-export default Login;
+export default Register;

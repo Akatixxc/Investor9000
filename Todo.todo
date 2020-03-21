@@ -14,14 +14,10 @@ Backlog:
 
 Toteutettavat asiat:
 
-    ☐ Login sivu ja käyttäjän talletus kantaan
+    ✔ Login sivu ja käyttäjän talletus kantaan @done(20-03-21 19:47)
 
     ☐ Osakkeiden mallinnus
 
     ☐ Frontin ja näkymien suunnittelu
 
-Login:
-    ☐ JWT kekseihin
-    ☐ Database
-    ☐ Salasanan hash + suola
-    ☐ login route ja react-router
+    ☐ Frontti antaa 0 feedbackkiä kirjautumisen tai rekisteröimisen epäonnistuessa

@@ -2,8 +2,10 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
 
 const FinnHub = require('./api/finnhub');
+const UserService = require('./user');
 const middlewares = require('./middlewares');
 const config = require('./config/config');
 
@@ -14,13 +16,6 @@ app.use(express.static('dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-const users = [
-    {
-        username: 'rasmus',
-        password: 'password',
-    },
-];
 
 app.get('/api/getStockExchange', middlewares.withAuth, (req, res) => {
     //with auth middlewaresssa asetetaan käyttäjä jota voidaan käyttää näin
@@ -44,19 +39,34 @@ app.get('/api/checkToken', (req, res) => {
     }
 });
 
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
 
-    const user = users.find(u => {
-        return u.username === username && u.password === password;
-    });
+    const foundUser = await UserService.findUserByUsername(username);
 
-    if (user) {
-        const accessToken = jwt.sign({ username: user.username }, config.jwtTokenSecret);
+    if (foundUser) {
+        const passwordsMatch = await bcrypt.compare(password, foundUser.password);
 
-        res.cookie('jwtToken', accessToken, { httpOnly: true }).json('success');
+        if (passwordsMatch) {
+            const accessToken = jwt.sign({ username: foundUser.username }, config.jwtTokenSecret);
+
+            res.cookie('jwtToken', accessToken, { httpOnly: true }).json('success');
+        } else {
+            res.json('Käyttäjänimi tai salasana väärin');
+        }
     } else {
         res.json('Käyttäjänimi tai salasana väärin');
+    }
+});
+
+app.post('/api/reqister', async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        await UserService.registerNewUser(username, password);
+        res.json('success');
+    } catch (err) {
+        console.log('Error in registering user: ' + err);
+        res.json('error');
     }
 });
 
