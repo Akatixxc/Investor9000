@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
 import { post } from '../api/apiHelper';
+import { parseResponseError } from '../helpers/helpers';
 
 function Register() {
     const history = useHistory();
@@ -14,24 +15,22 @@ function Register() {
     const { username, password } = inputs;
 
     const handleRegister = e => {
-        //disabloidaan default event, eli sivun täysi refresh
+        // disabloidaan default event, eli sivun täysi refresh
         e.preventDefault();
 
-        post('/api/reqister', { body: JSON.stringify({ username: username, password: password }) }, false)
-            .then(res => {
+        post('/api/reqister', { body: JSON.stringify({ username, password }) }, false)
+            .then(() => {
                 const { from } = location.state || { from: { pathname: '/' } };
-                if (res === 'success') {
-                    history.replace(from);
-                } else {
-                    console.log('Register virhekäsittely');
-                }
+                history.replace(from);
             })
-            .catch(err => console.log(`Registeration failed: ${err}`));
+            .catch(err => {
+                parseResponseError(err).then(error => console.log(`Registeration failed: ${error.message}`));
+            });
     };
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setInputs(inputs => ({ ...inputs, [name]: value }));
+        setInputs(input => ({ ...input, [name]: value }));
     }
 
     return (

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
@@ -18,28 +19,33 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.get('/api/getStockExchange', middlewares.withAuth, (req, res) => {
-    //with auth middlewaresssa asetetaan käyttäjä jota voidaan käyttää näin
-    const user = req.user;
+    // with auth middlewaresssa asetetaan käyttäjä jota voidaan käyttää näin
+    // const { user } = req;
+
     FinnHub.getDataFromFinnhub('/stock/exchange', null).then(result => {
         res.json(result);
     });
 });
 
-app.get('/api/checkToken', (req, res) => {
+app.get('/api/checkToken', (req, res, next) => {
     const authHeader = req.cookies.jwtToken;
     if (authHeader) {
-        jwt.verify(authHeader, config.jwtTokenSecret, (err, user) => {
-            if (err) {
-                return res.json(false);
+        jwt.verify(authHeader, config.jwtTokenSecret, error => {
+            if (error) {
+                const err = new Error('JWT ei validi');
+                err.status = 401;
+                next(err);
             }
             res.json(true);
         });
     } else {
-        res.json(false);
+        const err = new Error('JWT puuttuu');
+        err.status = 401;
+        next(err);
     }
 });
 
-app.post('/api/login', async (req, res) => {
+app.post('/api/login', async (req, res, next) => {
     const { username, password } = req.body;
 
     const foundUser = await UserService.findUserByUsername(username);
@@ -49,29 +55,42 @@ app.post('/api/login', async (req, res) => {
 
         if (passwordsMatch) {
             const accessToken = jwt.sign({ username: foundUser.username }, config.jwtTokenSecret);
-
-            res.cookie('jwtToken', accessToken, { httpOnly: true }).json('success');
+            res.cookie('jwtToken', accessToken, { httpOnly: true }).sendStatus(204);
         } else {
-            res.json('Käyttäjänimi tai salasana väärin');
+            const err = new Error('Käyttäjänimi tai salasana väärin');
+            err.status = 403;
+            next(err);
         }
     } else {
-        res.json('Käyttäjänimi tai salasana väärin');
+        const err = new Error('Käyttäjänimi tai salasana väärin');
+        err.status = 403;
+        next(err);
     }
 });
 
-app.post('/api/reqister', async (req, res) => {
+app.post('/api/reqister', async (req, res, next) => {
     const { username, password } = req.body;
     try {
         await UserService.registerNewUser(username, password);
-        res.json('success');
-    } catch (err) {
-        console.log('Error in registering user: ' + err);
-        res.json('error');
+        res.sendStatus(201);
+    } catch (error) {
+        error.status = 400;
+        next(error);
     }
 });
 
 app.get('/api/logout', middlewares.withAuth, (req, res) => {
-    res.clearCookie('jwtToken').json('success');
+    res.clearCookie('jwtToken').sendStatus(204);
+});
+
+app.use((req, res, next) => {
+    const err = new Error(`Path ${req.originalUrl} Not Found`);
+    err.status = 404;
+    next(err);
+});
+
+app.use((err, req, res, _next) => {
+    res.status(err.status || 500).json({ message: err.message });
 });
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));

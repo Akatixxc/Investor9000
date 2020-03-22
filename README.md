@@ -56,6 +56,35 @@ Käyttäjän authentikaatioon käytetään JWT tokeneita.
 
 Todo+ plugarin avulla laitetaan kehitysideoita todo.todo tiedostoon
 
+### Error käsittely ja status koodit:
+
+Http status koodeista ja niiden merkityksestä voi lukea täältä:
+https://www.restapitutorial.com/httpstatuscodes.html
+
+Ei tarvita muita kun tähdellä merkittyjä, tuskin kaikkia niistäkään.
+
+Jos tarvii "heittää" virhe, tee Error() objekti sen jälkeen error käsittely javasta tutulla try catchiä käyttäen.
+kun clientille lähetetään error, aseta virheelle status (err.status = 40x) ja sen jälkeen next(errorObjekti), tällöin virhe menee viimeiseen "routeen":
+app.use((err, req, res, \_next) => {
+res.status(err.status || 500).json({ message: err.message });
+});
+ja client ymmärtää tämän message tyylin.
+
+jos ei palauteta dataa, käytetään statuskoodia 204, muussa tapauksessa tulee lähettää clientille dataa eli res.json(dataa)
+pelkkä status laitetaan kutsulla res.sendStatus(204)
+
+clientin puolella kutsuja tehdessä:
+
+```JavaScript
+get('url', body ja muut headerit, tarviiko authentikaatiota?)
+    .then(res => {
+        onnistuneen kutsun käsittely, 200 sarjan http koodi, res on null jos status on 204
+    })
+    .catch(err => {
+        epäonnistuneen kutsun käsittely, 400/500 sarjan http koodi
+    })
+```
+
 ## Database
 
 [MariaDB](https://mariadb.com/) lataa & asenna

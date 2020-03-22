@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { get } from '../api/apiHelper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,6 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { CircularProgress } from '@material-ui/core';
+import { get } from '../api/apiHelper';
 import history from './history';
 
 export default class StockExhanges extends Component {
@@ -20,8 +20,8 @@ export default class StockExhanges extends Component {
 
     componentDidMount() {
         get('/api/getStockExchange', null, true)
-            //Jostain syystä result on textimuodossa eikä jsonina, joten se pitää parsia vielä erikseen, tätä voisi tutkia, en jaksanut enempää
-            .then(result => this.setState({ stockExhange: JSON.parse(result), loggedIn: true }));
+            // Jostain syystä result on textimuodossa eikä jsonina, joten se pitää parsia vielä erikseen, tätä voisi tutkia, en jaksanut enempää
+            .then(result => this.setState({ stockExhange: JSON.parse(result) }));
     }
 
     render() {

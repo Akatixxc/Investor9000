@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import { post } from '../api/apiHelper';
+import { parseResponseError } from '../helpers/helpers';
 
 function Login() {
     const history = useHistory();
@@ -13,28 +14,23 @@ function Login() {
     });
     const { username, password } = inputs;
 
-    //const [username, setUsername] = useState('rasmus');
-    //const [password, setPassword] = useState('password');
-
     const handleLogin = e => {
-        //disabloidaan default event, eli sivun täysi refresh
+        // disabloidaan default event, eli sivun täysi refresh
         e.preventDefault();
 
-        post('/api/login', { body: JSON.stringify({ username: username, password: password }) }, false)
-            .then(res => {
+        post('/api/login', { body: JSON.stringify({ username, password }) }, false)
+            .then(() => {
                 const { from } = location.state || { from: { pathname: '/' } };
-                if (res === 'success') {
-                    history.replace(from);
-                } else {
-                    console.log('Login virhekäsittely');
-                }
+                history.replace(from);
             })
-            .catch(err => console.log(`Login failed: ${err}`));
+            .catch(err => {
+                parseResponseError(err).then(error => console.log(`Login failed: ${error.message}`));
+            });
     };
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setInputs(inputs => ({ ...inputs, [name]: value }));
+        setInputs(input => ({ ...input, [name]: value }));
     }
 
     return (
