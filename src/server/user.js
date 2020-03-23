@@ -6,7 +6,7 @@ const findUserByUsername = async username => {
     let conn;
     try {
         conn = await pool.getConnection();
-        const user = await conn.query('SELECT * FROM user WHERE lower(username) = lower(?)', username);
+        const user = await conn.query('SELECT * FROM user WHERE LOWER(username) = LOWER(?);', username);
         return user[0];
     } catch (err) {
         throw new Error(`Error in getting user by username: ${err}`);
@@ -29,7 +29,7 @@ const registerNewUser = async (username, password) => {
     try {
         conn = await pool.getConnection();
         const hash = await bcrypt.hash(password, config.hashSaltRounds);
-        await conn.query('INSERT INTO user(username, password) VALUES (?, ?)', [username, hash]);
+        await conn.query('INSERT INTO user(username, password) VALUES (?, ?);', [username, hash]);
     } catch (err) {
         throw new Error(`Error in inserting new user to the database`);
     } finally {

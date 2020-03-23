@@ -136,3 +136,11 @@ DB_PASSWORD= käyttäjän salasana, kysyy asentaessa
 -   Rasmus koodaa käyttäjän authentikoinnin
 -   Milla suunnittelee sovelluksen ulkonäköä sekä toimivuutta
 -   Tarkastetaan tilanne uudelleen kun kaikki on päässyt vauhtiin
+
+23.3
+
+-   Rasmus on saanut authentikaation tehtyä
+-   Milla on suunnitellut sivut ja sovellukselle perus ulkonäön
+-   Andreas on tutkinut Finnhub apia ja pystyy aloittamaan backendin suunnittelun
+-   Milla alkaa toteuttamaan suunnitelmaansa frontin puolella
+-   Rasmus ja Anreas aloittavat backendin ja kannan toteutuksen

@@ -1,14 +1,9 @@
-var https = require('https');
-var config = require('../config/config');
-
-const getDataFromFinnhub = (url, params) => {
-    let urlWithParams = `/api/v1${url}?token=${config.finnhubKey}${params ? params : ''}`;
-    return makeGetRequest(urlWithParams);
-};
+const https = require('https');
+const config = require('../config/config');
 
 const makeGetRequest = url => {
     return new Promise((resolve, reject) => {
-        var options = {
+        const options = {
             method: 'GET',
             hostname: `finnhub.io`,
             path: url,
@@ -26,16 +21,22 @@ const makeGetRequest = url => {
             });
 
             res.on('end', () => {
-                //console.log(body);
+                // console.log(body);
                 resolve(body);
             });
         });
 
         request.on('error', err => {
+            reject();
             console.log(`Error on a request to finnhub: ${err}`);
         });
         request.end();
     });
+};
+
+const getDataFromFinnhub = (url, params) => {
+    const urlWithParams = `/api/v1${url}?token=${config.finnhubKey}${params || ''}`;
+    return makeGetRequest(urlWithParams);
 };
 
 module.exports = {

@@ -25,8 +25,6 @@ pool.getConnection((err, connection) => {
     if (connection) {
         connection.release();
     }
-
-    return;
 });
 
 module.exports = pool;
