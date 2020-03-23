@@ -1,38 +1,28 @@
-import React, { Component } from 'react';
-import { get } from './api/apiHelper';
+import React from 'react';
 
-export default class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            stockExhange: null,
-        };
-    }
+import { Router, Switch, Route } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
+import Login from './components/Login';
+import Register from './components/Register';
+import StockExchanges from './components/StockExchanges';
+import history from './components/history';
 
-    componentDidMount() {
-        get('/api/getStockExchange', null)
-            //Jostain syystä result on textimuodossa eikä jsonina, joten se pitää parsia vielä erikseen, tätä voisi tutkia, en jaksanut enempää
-            .then(result => this.setState({ stockExhange: JSON.parse(result) }));
-    }
-
-    render() {
-        const { stockExhange } = this.state;
-        return (
-            <div>
-                {stockExhange ? (
-                    <table>
-                        {stockExhange.map(row => (
-                            <tr key={row.code}>
-                                <td>{row.code}</td>
-                                <td>{row.name}</td>
-                                <td>{row.currency}</td>
-                            </tr>
-                        ))}
-                    </table>
-                ) : (
-                    <h1>Loading...</h1>
-                )}
-            </div>
-        );
-    }
+function App() {
+    return (
+        <Router history={history}>
+            <Switch>
+                <Route path="/login">
+                    <Login />
+                </Route>
+                <Route path="/register">
+                    <Register />
+                </Route>
+                <PrivateRoute path="/">
+                    <StockExchanges />
+                </PrivateRoute>
+            </Switch>
+        </Router>
+    );
 }
+
+export default App;

@@ -1,8 +1,21 @@
+const authorizationHeader = () => {
+    const jwtToken = localStorage.getItem('jwtToken');
+    return jwtToken ? { Authorization: `Bearer ${jwtToken}` } : {};
+};
+
+const commonHeaders = requireAuth => {
+    const authHeader = requireAuth ? authorizationHeader() : null;
+    return {
+        'Content-Type': 'application/json',
+        ...authHeader,
+    };
+};
+
 const parseJSON = response => {
-    if (response.status === 204 || response.status === 205) {
+    if (response.status === 204) {
         return null;
     }
-    return response.json().catch(err => console.log(err));
+    return response.json();
 };
 
 const checkStatus = response => {
@@ -20,25 +33,27 @@ const request = (url, options) => {
         .then(parseJSON);
 };
 
-export const get = (url, options) => {
+export const get = (url, options, requireAuth) => {
     const { headers, ...rest } = options || {};
     return request(url, {
         credentials: 'include',
         method: 'GET',
         ...rest,
         headers: {
+            ...commonHeaders(requireAuth),
             ...headers,
         },
     });
 };
 
-export const post = (url, options) => {
+export const post = (url, options, requireAuth) => {
     const { headers, ...rest } = options || {};
     return request(url, {
         credentials: 'include',
         method: 'POST',
         ...rest,
         headers: {
+            ...commonHeaders(requireAuth),
             ...headers,
         },
     });
