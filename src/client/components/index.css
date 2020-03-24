@@ -31,13 +31,19 @@ section {
 }
 
 table {
-    border: 0.1px solid black;
+    width: 100%;
     font-family: 'Roboto', sans-serif;
     padding: 10px 0 10px 10px;
 }
+#title {
+    text-align: left;
+    margin-left: 10px;
+    font-family: 'Roboto', sans-serif;
+}
 
 th,
-td {
+td,
+tbody {
     border-collapse: collapse;
     font-family: 'Roboto', sans-serif;
     padding: 5px;

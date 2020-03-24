@@ -12,6 +12,7 @@ import history from './history';
 import './index.css';
 import Header from './Header';
 import User from './User';
+import Sharetable from './Sharetable';
 
 const user = {
     firstname: 'Sampo',
@@ -23,6 +24,13 @@ const user = {
     percent: '-3,14 %',
     balance: 'Saldo',
     bamount: '680 €',
+};
+
+const company = {
+    name: 'Yritys X',
+    quantity: '15',
+    value: '752',
+    percent: '4.17',
 };
 
 export default class StockExhanges extends Component {
@@ -44,6 +52,7 @@ export default class StockExhanges extends Component {
         return (
             <div>
                 <Header header="Investor9000" />
+
                 <User
                     firstname={user.firstname}
                     lastname={user.lastname}
@@ -64,6 +73,7 @@ export default class StockExhanges extends Component {
                 >
                     Logout
                 </Button>
+                <Sharetable />
 
                 {stockExhange ? (
                     <TableContainer component={Paper}>

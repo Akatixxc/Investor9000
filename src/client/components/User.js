@@ -1,5 +1,4 @@
 import React from 'react';
-import { text } from 'body-parser';
 import './index.css';
 
 // Käyttäjän nimi, pääoma ja kehitys
