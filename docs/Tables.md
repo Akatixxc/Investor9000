@@ -14,15 +14,15 @@ users
 SQL query:
 
 ```SQL
-CREATE TABLE users (
-    username VARCHAR(56) NOT NULL DEFAULT '',
-    password TEXT NOT NULL DEFAULT '',
-    first_name TEXT NOT NULL,
-    last_name TEXT NOT NULL,
-    balance INT(11) NOT NULL DEFAULT 10000,
-    PRIMARY KEY (username)
+CREATE TABLE `users` (
+	`username` VARCHAR(56) NOT NULL DEFAULT '',
+	`password` TEXT NOT NULL DEFAULT '',
+	`first_name` TEXT NOT NULL,
+	`last_name` TEXT NOT NULL,
+	`balance` DOUBLE NOT NULL DEFAULT 10000,
+	PRIMARY KEY (`username`)
 )
-COLLATE='utf8_general_ci'
+COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB
 ;
 ```
@@ -42,18 +42,19 @@ bought_stocks
 SQL query:
 
 ```SQL
-CREATE TABLE bought_stocks (
-    username VARCHAR(50) NOT NULL,
-    company_symbol VARCHAR(50) NOT NULL,
-    company_name VARCHAR(50) NOT NULL,
-    stock_count INT(11) NOT NULL DEFAULT 0,
-    price DOUBLE NOT NULL DEFAULT 0,
-    INDEX username (username) USING BTREE,
-    CONSTRAINT username FOREIGN KEY (username) REFERENCES investor.users (username) ON UPDATE RESTRICT ON DELETE RESTRICT
+CREATE TABLE `bought_stocks` (
+	`username` VARCHAR(50) NOT NULL,
+	`company_symbol` VARCHAR(50) NOT NULL,
+	`company_name` VARCHAR(50) NOT NULL,
+	`stock_count` INT(11) NOT NULL DEFAULT 0,
+	`price` DOUBLE NOT NULL DEFAULT 0,
+	INDEX `username` (`username`),
+	CONSTRAINT `username` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB
 ;
+
 ```
 
 stock_prices (used as companies for now)
@@ -70,16 +71,17 @@ timestamp: 1585047271,
 SQL query:
 
 ```SQL
-CREATE TABLE stock_prices (
-    symbol VARCHAR(50) NOT NULL,
-    company_name VARCHAR(50) NOT NULL,
-    current_price DOUBLE NOT NULL,
-    timestamp TIMESTAMP NULL DEFAULT NULL,
-    PRIMARY KEY (symbol)
+CREATE TABLE `stock_prices` (
+	`symbol` VARCHAR(50) NOT NULL,
+	`company_name` VARCHAR(50) NOT NULL,
+	`current_price` DOUBLE NULL DEFAULT NULL,
+	`timestamp` TIMESTAMP NULL DEFAULT NULL,
+	PRIMARY KEY (`symbol`)
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB
 ;
+
 ```
 
 companies (work in progress) (in future)

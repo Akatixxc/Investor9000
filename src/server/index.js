@@ -9,6 +9,7 @@ const FinnHub = require('./api/finnhub');
 const UserService = require('./user');
 const middlewares = require('./middlewares');
 const config = require('./config/config');
+const { job, updatePrices } = require('./jobs');
 
 const app = express();
 
@@ -17,6 +18,10 @@ app.use(express.static('dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+job.start();
+// Update prices funkari debuggausta varten
+// updatePrices();
 
 app.get('/api/getStockExchange', middlewares.withAuth, (req, res) => {
     // with auth middlewaresssa asetetaan käyttäjä jota voidaan käyttää näin
