@@ -1,0 +1,233 @@
+.header {
+    text-align-last: center;
+    border: 0.1px solid black;
+    margin: 30;
+    background: linear-gradient(to right, #000000 14%, #ffffff 103%);
+    font-family: 'Black Ops One', cursive;
+    font-size: 25px;
+    color: #ffffff;
+}
+.center {
+    text-align-last: center;
+    font-family: 'Roboto', sans-serif;
+}
+.mydiv {
+    margin: auto;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #f8f7f7;
+}
+
+section {
+    background: #c0c0c0;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    font-family: 'Roboto', sans-serif;
+    border: 0.1px solid black;
+}
+
+table {
+    border: 0.1px solid black;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 0 10px 10px;
+}
+
+th,
+td {
+    border-collapse: collapse;
+    font-family: 'Roboto', sans-serif;
+    padding: 5px;
+    text-align: left;
+}
+caption {
+    text-align: left;
+    margin: 5px 0 5px 1px;
+    padding: 5px;
+}
+
+middlesection {
+    flex-direction: row;
+}
+
+form {
+    padding: 100px;
+    text-align: left;
+    margin: auto;
+    display: table;
+    width: 200px;
+    padding: 10px 10px 10px 10px;
+    font-family: 'Roboto', sans-serif;
+}
+
+TextField[type='text'] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+TextField[type='password'] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+input[type='submit'] {
+    width: 100%;
+    background-color: #4caf50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+}
+
+input[type='button'] {
+    width: 100%;
+    background-color: #4caf50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+}
+
+input[type='submit']:hover {
+    background-color: #45a049;
+}
+
+button[type='sell'] {
+    width: 50px;
+    background-color: #4caf50;
+    color: white;
+    padding: 5px;
+    margin: 0 0 8px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+}
+
+button[type='add'] {
+    width: 3%;
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    margin: ;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+}
+
+button[type='submit'] {
+    width: 8%;
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    margin: 0 0 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+}
+
+button[type='login'] {
+    width: 100%;
+    background-color: #4caf50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+}
+
+button[type='login']:hover {
+    background-color: #45a049;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+/* -- quantity box -- */
+
+.quantity {
+    display: inline-block;
+}
+
+.quantity .input-text.qty {
+    width: 15px;
+    height: 39px;
+    padding: 0 5px;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid #efefef;
+}
+
+.quantity.buttons_added {
+    text-align: left;
+    position: relative;
+    white-space: nowrap;
+    vertical-align: top;
+}
+
+.quantity.buttons_added input {
+    display: inline-block;
+    margin: 0;
+    vertical-align: top;
+    box-shadow: none;
+}
+
+.quantity.buttons_added .minus,
+.quantity.buttons_added .plus {
+    padding: 3px;
+    height: 41px;
+    background-color: #afacac;
+    border: 1px solid #efefef;
+    cursor: pointer;
+}
+
+.quantity.buttons_added .minus {
+    border-right: 0;
+}
+
+.quantity.buttons_added .plus {
+    border-left: 0;
+}
+
+.quantity.buttons_added .minus:hover,
+.quantity.buttons_added .plus:hover {
+    background: #eeeeee;
+}
+
+.quantity input::-webkit-outer-spin-button,
+.quantity input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0;
+}
+
+.quantity.buttons_added .minus:focus,
+.quantity.buttons_added .plus:focus {
+    outline: none;
+}

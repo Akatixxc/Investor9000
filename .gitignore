@@ -4,3 +4,6 @@ dist
 *.log
 yarn.lock
 .env
+.DS_Store
+src/.DS_Store
+src/client/.DS_Store
