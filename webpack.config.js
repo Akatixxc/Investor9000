@@ -1,8 +1,16 @@
+import * as Configuration from 'log4js/lib/configuration';
+
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const outputDirectory = 'dist';
+
+const stdout = require('log4js/lib/appenders/stdout');
+
+Configuration.prototype.loadAppenderModule = () => {
+    return stdout;
+};
 
 module.exports = {
     entry: ['babel-polyfill', './src/client/index.js'],

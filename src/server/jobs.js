@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 const { CronJob } = require('cron');
+const { logger } = require('./logger');
 const pool = require('./database');
 const FinnHub = require('./api/finnhub');
 
@@ -13,6 +14,7 @@ const getCompaniesFromDatabase = async () => {
         });
         return symbols;
     } catch (err) {
+        logger.error(`Error in getting symbols: ${err}`);
         throw new Error(`Error in getting symbols: ${err}`);
     } finally {
         if (conn) {
@@ -37,7 +39,6 @@ const updatePrices = async () => {
                             const arr = [];
                             arr.push(result.c, result.t, symbols[i]);
                             resolve(arr);
-                            console.log(arr);
                         }
                     });
             }, 2000 * i);
@@ -57,7 +58,7 @@ const updatePrices = async () => {
         conn.batch(`UPDATE stock_prices SET current_price = ?, timestamp = FROM_UNIXTIME(?) WHERE symbol = ?;`, filteredResults);
         conn.commit();
     } catch (err) {
-        console.log(err);
+        logger.error(`Error in inserting stock prices to the database: ${err}`);
         conn.rollback(); // errortarkistus
     }
 };
@@ -76,7 +77,7 @@ const companiesToDatabase = async () => {
         conn.batch(`INSERT INTO stock_prices (symbol, company_name) VALUES (?,?);`, mapped);
         conn.commit();
     } catch (err) {
-        console.log(err);
+        logger.error(`Error in inserting companies to the database: ${err}`);
         conn.rollback(); // errortarkistus
     }
 };
@@ -85,9 +86,9 @@ const companiesToDatabase = async () => {
 const job = new CronJob(
     '0 */20 * * * *',
     async () => {
-        console.log('Starting updating prices');
+        logger.info('Starting updating prices');
         await updatePrices();
-        console.log('Done');
+        logger.info('Done');
     },
     null,
     true,

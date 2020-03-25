@@ -85,6 +85,21 @@ get('url', body ja muut headerit, tarviiko authentikaatiota?)
     })
 ```
 
+### Logger
+
+Logitukseen käytetään log4js kirjastoa, sen saa käyttöön kirjoittamalla
+
+```JS
+const { logger } = require('./logger');
+// Erilaiset logit - valitse tilanteeseen sopiva
+logger.trace('Entering cheese testing');
+logger.debug('Got cheese.');
+logger.info('Cheese is Comté.');
+logger.warn('Cheese is quite smelly.');
+logger.error('Cheese is too ripe!');
+logger.fatal('Cheese was breeding ground for listeria.');
+```
+
 ## Database
 
 [MariaDB](https://mariadb.com/) lataa & asenna

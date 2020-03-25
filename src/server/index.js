@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 
+const { logger } = require('./logger');
 const FinnHub = require('./api/finnhub');
 const UserService = require('./user');
 const middlewares = require('./middlewares');
@@ -98,4 +99,4 @@ app.use((err, req, res, _next) => {
     res.status(err.status || 500).json({ message: err.message });
 });
 
-app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
+app.listen(process.env.PORT || 8080, () => logger.info(`Listening on port ${process.env.PORT || 8080}!`));
