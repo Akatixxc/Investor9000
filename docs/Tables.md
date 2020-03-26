@@ -19,7 +19,7 @@ CREATE TABLE users (
     password TEXT NOT NULL DEFAULT '',
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
-    balance INT(11) NOT NULL DEFAULT 10000,
+    balance DOUBLE(22,0) NOT NULL DEFAULT 10000,
     PRIMARY KEY (username)
 )
 COLLATE='utf8_general_ci'
@@ -73,7 +73,7 @@ SQL query:
 CREATE TABLE stock_prices (
     symbol VARCHAR(50) NOT NULL,
     company_name VARCHAR(50) NOT NULL,
-    current_price DOUBLE NOT NULL,
+    current_price DOUBLE(22,0) NULL DEFAULT NULL,
     timestamp TIMESTAMP NULL DEFAULT NULL,
     PRIMARY KEY (symbol)
 )

@@ -134,7 +134,7 @@ https://finnhub.io/docs/api#quote
 
 Get latest prices. "Constant polling is not recommended. Use websocket if you need real-time update". We could use websocket?
 
-URL: https://finnhub.io/api/v1/stock/price-target?symbol{SYMBOL}&token={TOKEN}
+URL: https://finnhub.io/api/v1/quote?symbol{SYMBOL}&token={TOKEN}
 
 Weight: 1
 
