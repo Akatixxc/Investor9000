@@ -10,7 +10,7 @@ const FinnHub = require('./api/finnhub');
 const UserService = require('./user');
 const middlewares = require('./middlewares');
 const config = require('./config/config');
-const { job, updatePrices } = require('./jobs');
+const { job, initializeDatabase, updatePrices } = require('./jobs');
 
 const app = express();
 
@@ -20,6 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+initializeDatabase();
 job.start();
 // Update prices funkari debuggausta varten
 // updatePrices();

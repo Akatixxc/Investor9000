@@ -19,7 +19,7 @@ CREATE TABLE `users` (
 	`password` TEXT NOT NULL DEFAULT '',
 	`first_name` TEXT NOT NULL,
 	`last_name` TEXT NOT NULL,
-	`balance` DOUBLE NOT NULL DEFAULT 10000,
+	`balance` FLOAT NOT NULL DEFAULT 10000,
 	PRIMARY KEY (`username`)
 )
 COLLATE='latin1_swedish_ci'
@@ -47,7 +47,7 @@ CREATE TABLE `bought_stocks` (
 	`company_symbol` VARCHAR(50) NOT NULL,
 	`company_name` VARCHAR(50) NOT NULL,
 	`stock_count` INT(11) NOT NULL DEFAULT 0,
-	`price` DOUBLE NOT NULL DEFAULT 0,
+	`price` FLOAT NOT NULL DEFAULT 0,
 	INDEX `username` (`username`),
 	CONSTRAINT `username` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 )
@@ -74,7 +74,7 @@ SQL query:
 CREATE TABLE `stock_prices` (
 	`symbol` VARCHAR(50) NOT NULL,
 	`company_name` VARCHAR(50) NOT NULL,
-	`current_price` DOUBLE NULL DEFAULT NULL,
+	`current_price` FLOAT NULL DEFAULT NULL,
 	`timestamp` TIMESTAMP NULL DEFAULT NULL,
 	PRIMARY KEY (`symbol`)
 )
