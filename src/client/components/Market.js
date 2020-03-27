@@ -21,18 +21,20 @@ const MinusIcon = () => {
 };
 
 const PanelHeader = props => {
+    const { handleToggle, isExpanded, children } = props;
     return (
-        <button type="button" className="panel__header" onClick={props.handleToggle} onKeyDown={props.handleKeyDown} aria-expanded={props.isExpanded}>
-            {props.children}
-            {props.isExpanded ? <MinusIcon /> : <PlusIcon />}
+        <button type="button" className="panel__header" onClick={handleToggle} aria-expanded={isExpanded}>
+            {children}
+            {isExpanded ? <MinusIcon /> : <PlusIcon />}
         </button>
     );
 };
 
 const PanelBody = props => {
+    const { children, isExpanded } = props;
     return (
-        <div className="panel__body" aria-hidden={props.isExpanded}>
-            {props.children}
+        <div className="panel__body" aria-hidden={isExpanded}>
+            {children}
         </div>
     );
 };
@@ -46,38 +48,24 @@ class Panel extends React.Component {
         };
 
         this.handleToggle = this.handleToggle.bind(this);
-        this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
     handleToggle() {
+        const { isExpanded } = this.state;
         this.setState({
-            isExpanded: !this.state.isExpanded,
+            isExpanded: !isExpanded,
         });
     }
 
-    handleKeyDown(event) {
-        if (event.keyCode === 40) {
-            event.preventDefault();
-            this.setState({
-                isExpanded: true,
-            });
-        }
-
-        if (event.keyCode === 38) {
-            event.preventDefault();
-            this.setState({
-                isExpanded: false,
-            });
-        }
-    }
-
     render() {
+        const { isExpanded } = this.state;
+        const { children, title } = this.props;
         return (
             <div className="panel">
-                <PanelHeader handleToggle={this.handleToggle} handleKeyDown={this.handleKeyDown} isExpanded={this.state.isExpanded}>
-                    {this.props.title}
+                <PanelHeader handleToggle={this.handleToggle} isExpanded={isExpanded}>
+                    {title}
                 </PanelHeader>
-                <PanelBody isExpanded={!this.state.isExpanded}>{this.props.children}</PanelBody>
+                <PanelBody isExpanded={!isExpanded}>{children}</PanelBody>
             </div>
         );
     }

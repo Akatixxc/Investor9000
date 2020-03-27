@@ -42,14 +42,14 @@ bought_stocks
 SQL query:
 
 ```SQL
-CREATE TABLE `bought_stocks` (
-	`username` VARCHAR(50) NOT NULL,
-	`company_symbol` VARCHAR(50) NOT NULL,
-	`company_name` VARCHAR(50) NOT NULL,
-	`stock_count` INT(11) NOT NULL DEFAULT 0,
-	`price` FLOAT NOT NULL DEFAULT 0,
-	INDEX `username` (`username`),
-	CONSTRAINT `username` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+CREATE TABLE bought_stocks (
+	username VARCHAR(56) NOT NULL,
+	company_symbol VARCHAR(50) NOT NULL,
+	company_name VARCHAR(50) NOT NULL,
+	stock_count INT(11) NOT NULL DEFAULT 0,
+	price FLOAT NOT NULL DEFAULT 0,
+	INDEX FK_bought_stocks_users (username) USING BTREE,
+	CONSTRAINT FK_bought_stocks_users FOREIGN KEY (username) REFERENCES investor.users (username) ON UPDATE RESTRICT ON DELETE RESTRICT
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB

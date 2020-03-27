@@ -1,44 +1,44 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class InputNumber extends React.Component {
-    state = {
-        value: 0,
-    };
-
     constructor() {
         super();
+
+        this.state = {
+            value: 0,
+        };
 
         this.increment = this.increment.bind(this);
         this.decrement = this.decrement.bind(this);
     }
 
-    get value() {
-        return this.state.value;
-    }
-
     increment() {
         const { max } = this.props;
+        const { value } = this.state;
 
-        if (typeof max === 'number' && this.value >= max) return;
+        if (value >= max) return;
 
-        this.setState({ value: this.value + 1 });
+        this.setState({ value: value + 1 });
     }
 
     decrement() {
         const { min } = this.props;
+        const { value } = this.state;
 
-        if (typeof min === 'number' && this.value <= min) return;
+        if (value <= min) return;
 
-        this.setState({ value: this.value - 1 });
+        this.setState({ value: value - 1 });
     }
 
     render() {
+        const { value } = this.state;
         return (
-            <div className="input-number" style={this.props.style}>
+            <div className="input-number">
                 <button type="button" onClick={this.decrement}>
                     &minus;
                 </button>
-                <span>{this.value}</span>
+                <span>{value}</span>
                 <button type="button" onClick={this.increment}>
                     &#43;
                 </button>
@@ -46,5 +46,15 @@ class InputNumber extends React.Component {
         );
     }
 }
+
+InputNumber.propTypes = {
+    max: PropTypes.number,
+    min: PropTypes.number,
+};
+
+InputNumber.defaultProps = {
+    min: 0,
+    max: 100,
+};
 
 export default InputNumber;

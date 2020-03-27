@@ -74,6 +74,14 @@ export default class StockExhanges extends Component {
                         <p>5 x 23,55 € = 117,75 € </p>
                         <button type="verify">Vahvista osto</button>
                     </Market>
+                    <Market title={company.name}>
+                        <p>
+                            Hinta: {company.price} <br /> Kehitys: {company.percent}{' '}
+                        </p>
+                        <Increment min={0} max={100} />
+                        <p>5 x 23,55 € = 117,75 € </p>
+                        <button type="verify">Vahvista osto</button>
+                    </Market>
                 </div>
             </div>
         );

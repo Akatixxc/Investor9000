@@ -24,7 +24,7 @@ const getCompaniesFromDatabase = async () => {
 };
 
 const updatePrices = async () => {
-    logger.info('Starting updating prices');
+    logger.info('Started to update prices');
 
     const symbols = await getCompaniesFromDatabase();
 
@@ -92,7 +92,7 @@ const companiesToDatabase = async () => {
 const initializeDatabase = async () => {
     const conn = await pool.getConnection();
     try {
-        conn.query(`CREATE TABLE IF NOT EXISTS users (
+        await conn.query(`CREATE TABLE IF NOT EXISTS users (
             username VARCHAR(56) NOT NULL DEFAULT '',
             password TEXT NOT NULL DEFAULT '',
             first_name TEXT NOT NULL,
@@ -108,9 +108,9 @@ const initializeDatabase = async () => {
             PRIMARY KEY (symbol)
         )`);
         conn.query(`CREATE TABLE IF NOT EXISTS bought_stocks (
-            username VARCHAR(50) NOT NULL COLLATE utf8_general_ci,
-            company_symbol VARCHAR(50) NOT NULL COLLATE utf8_general_ci,
-            company_name VARCHAR(50) NOT NULL COLLATE utf8_general_ci,
+            username VARCHAR(56) NOT NULL,
+            company_symbol VARCHAR(50) NOT NULL,
+            company_name VARCHAR(50) NOT NULL,
             stock_count INT(11) NOT NULL DEFAULT 0,
             price FLOAT NOT NULL DEFAULT 0,
             INDEX FK_bought_stocks_users (username) USING BTREE,
