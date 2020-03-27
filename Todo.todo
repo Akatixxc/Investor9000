@@ -16,8 +16,9 @@ Toteutettavat asiat:
 
     ✔ Login sivu ja käyttäjän talletus kantaan @done(20-03-21 19:47)
 
-    ☐ Osakkeiden mallinnus
+    ✔ Osakkeiden mallinnus @done(20-03-27 18:43)
 
-    ☐ Frontin ja näkymien suunnittelu
+    ✔ Frontin ja näkymien suunnittelu @done(20-03-27 18:43)
 
     ☐ Frontti antaa 0 feedbackkiä kirjautumisen tai rekisteröimisen epäonnistuessa
+        - paremmannäköisiä toimintoja esim. kun salasanat eivät ole samat

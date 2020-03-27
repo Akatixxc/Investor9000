@@ -17,7 +17,7 @@ const findUserByUsername = async username => {
     }
 };
 
-const registerNewUser = async (username, password) => {
+const registerNewUser = async (username, password, firstname, lastname) => {
     let conn;
 
     const userExists = await findUserByUsername(username);
@@ -29,7 +29,13 @@ const registerNewUser = async (username, password) => {
     try {
         conn = await pool.getConnection();
         const hash = await bcrypt.hash(password, config.hashSaltRounds);
-        await conn.query('INSERT INTO user(username, password) VALUES (?, ?);', [username, hash]);
+        await conn.query('INSERT INTO users(username, password, first_name, last_name, balance) VALUES (?,?,?,?,?);', [
+            username,
+            hash,
+            firstname,
+            lastname,
+            config.defaultBalance,
+        ]);
     } catch (err) {
         throw new Error(`Error in inserting new user to the database`);
     } finally {

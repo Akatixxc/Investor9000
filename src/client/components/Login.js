@@ -39,16 +39,14 @@ function Login() {
         <div>
             <Header header="Investor9000" />
             <div className="center">
-                <p>
-                    <font color="black">Tervetuloa sijoittamaan!</font>
-                </p>
+                <p>Tervetuloa sijoittamaan!</p>
             </div>
             <form noValidate autoComplete="off">
                 <TextField type="text" id="username" name="username" label="Käyttäjätunnus" value={username} onChange={handleChange} />
                 <br />
-                <TextField type="password" id="password" name="password" label="Salasana" type="password" value={password} onChange={handleChange} />
+                <TextField type="password" id="password" name="password" label="Salasana" value={password} onChange={handleChange} />
                 <br />
-                <Button type="login" variant="contained" onClick={handleLogin}>
+                <Button type="submit" variant="contained" onClick={handleLogin}>
                     Kirjaudu sisään
                 </Button>
                 <br />

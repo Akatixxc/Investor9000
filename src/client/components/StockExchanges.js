@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import { CircularProgress } from '@material-ui/core';
 import { get } from '../api/apiHelper';
 import history from './history';
 import './index.css';
@@ -37,19 +30,16 @@ const company = {
 export default class StockExhanges extends Component {
     constructor() {
         super();
-        this.state = {
-            stockExhange: null,
-        };
+        this.state = {};
     }
 
     componentDidMount() {
         get('/api/getStockExchange', null, true)
             // Jostain syystä result on textimuodossa eikä jsonina, joten se pitää parsia vielä erikseen, tätä voisi tutkia, en jaksanut enempää
-            .then(result => this.setState({ stockExhange: JSON.parse(result) }));
+            .then(result => console.log(result));
     }
 
     render() {
-        const { stockExhange } = this.state;
         return (
             <div>
                 <Header header="Investor9000" />
@@ -66,7 +56,7 @@ export default class StockExhanges extends Component {
                     bamount={user.bamount}
                 />
                 <Button
-                    type="submit"
+                    type="verify"
                     variant="contained"
                     onClick={() => {
                         get(`/api/logout`, null, true).then(history.push('/login'));
@@ -82,29 +72,9 @@ export default class StockExhanges extends Component {
                         </p>
                         <Increment min={0} max={100} />
                         <p>5 x 23,55 € = 117,75 € </p>
-                        <button type="submit">Vahvista osto</button>
+                        <button type="verify">Vahvista osto</button>
                     </Market>
                 </div>
-                {stockExhange ? (
-                    <TableContainer component={Paper}>
-                        <Table aria-label="simple table">
-                            <TableBody>
-                                {stockExhange.map(row => (
-                                    <TableRow key={row.name}>
-                                        <TableCell component="th" scope="row">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="right">{row.code}</TableCell>
-                                        <TableCell align="right">{row.name}</TableCell>
-                                        <TableCell align="right">{row.currency}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                ) : (
-                    <CircularProgress />
-                )}
             </div>
         );
     }

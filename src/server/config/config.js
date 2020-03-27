@@ -10,4 +10,5 @@ module.exports = {
         password: process.env.DB_PASSWORD,
     },
     hashSaltRounds: 15,
+    defaultBalance: 10000,
 };

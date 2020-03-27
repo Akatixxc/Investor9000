@@ -143,7 +143,7 @@ button[type='add'] {
     font-family: 'Roboto', sans-serif;
 }
 
-button[type='submit'] {
+button[type='verify'] {
     width: 8%;
     background-color: #4caf50;
     color: white;
@@ -155,7 +155,7 @@ button[type='submit'] {
     font-family: 'Roboto', sans-serif;
 }
 
-button[type='login'] {
+button[type='submit'] {
     width: 100%;
     background-color: #4caf50;
     color: white;

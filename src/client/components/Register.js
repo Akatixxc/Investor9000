@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import { post } from '../api/apiHelper';
 import { parseResponseError } from '../helpers/helpers';
 import './index.css';
@@ -11,23 +11,31 @@ function Register() {
     const location = useLocation();
 
     const [inputs, setInputs] = useState({
+        firstname: '',
+        lastname: '',
         username: '',
         password: '',
+        confirmPassword: '',
     });
-    const { username, password } = inputs;
+    const { username, password, firstname, lastname, confirmPassword } = inputs;
 
     const handleRegister = e => {
         // disabloidaan default event, eli sivun täysi refresh
         e.preventDefault();
 
-        post('/api/reqister', { body: JSON.stringify({ username, password }) }, false)
-            .then(() => {
-                const { from } = location.state || { from: { pathname: '/' } };
-                history.replace(from);
-            })
-            .catch(err => {
-                parseResponseError(err).then(error => console.log(`Registeration failed: ${error.message}`));
-            });
+        if (password === confirmPassword) {
+            post('/api/reqister', { body: JSON.stringify({ username, password, firstname, lastname }) }, false)
+                .then(() => {
+                    const { from } = location.state || { from: { pathname: '/' } };
+                    history.replace(from);
+                })
+                .catch(err => {
+                    parseResponseError(err).then(error => console.log(`Registeration failed: ${error.message}`));
+                });
+        } else {
+            // TODO: paremmannäköiset alertit
+            alert('Salasanat eivät ole samat!');
+        }
     };
 
     function handleChange(e) {
@@ -39,24 +47,23 @@ function Register() {
         <div>
             <Header header="Investor9000" />
             <div className="center">
-                <p>
-                    <font color="black">Syötä tiedot. Tähdellä merkatut kentät ovat pakollisia.</font>
-                </p>
+                <p>Syötä tiedot. Tähdellä merkatut kentät ovat pakollisia.</p>
             </div>
             <form noValidate autoComplete="off">
                 <TextField id="firstname" name="firstname" label="Etunimi" onChange={handleChange} required />
                 <br />
                 <TextField id="lastname" name="lastname" label="Sukunimi" onChange={handleChange} required />
                 <br />
-                <TextField id="username" name="username" label="Sähköposti" value={username} onChange={handleChange} required />
+                <TextField id="username" name="username" label="Käyttäjänimi" value={username} onChange={handleChange} required />
                 <br />
-                <TextField id="password" name="password" label="Salasana" type="password" value={password} onChange={handleChange} minlength="8" required />
+                <TextField id="password" name="password" label="Salasana" type="password" value={password} onChange={handleChange} minLength="8" required />
                 <br />
-                <TextField id="confirm_password" name="password" label="Vahvista salasana" type="password" minlength="8" required />
+                <TextField id="confirmPassword" name="confirmPassword" label="Vahvista salasana" type="password" minLength="8" required />
                 <br />
-                <Button type="login" variant="contained" onClick={handleRegister}>
+                <Button type="submit" variant="contained" onClick={handleRegister}>
                     Luo tunnukset
                 </Button>
+                <Link to="/login">Kirjaudu täältä, jos sinulla on jo tunnukset</Link>
             </form>
         </div>
     );

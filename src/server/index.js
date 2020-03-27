@@ -76,9 +76,9 @@ app.post('/api/login', async (req, res, next) => {
 });
 
 app.post('/api/reqister', async (req, res, next) => {
-    const { username, password } = req.body;
+    const { username, password, firstname, lastname } = req.body;
     try {
-        await UserService.registerNewUser(username, password);
+        await UserService.registerNewUser(username, password, firstname, lastname);
         res.sendStatus(204);
     } catch (error) {
         error.status = 400;

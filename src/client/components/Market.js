@@ -22,7 +22,7 @@ const MinusIcon = () => {
 
 const PanelHeader = props => {
     return (
-        <button className="panel__header" onClick={props.handleToggle} onKeyDown={props.handleKeyDown} aria-expanded={props.isExpanded}>
+        <button type="button" className="panel__header" onClick={props.handleToggle} onKeyDown={props.handleKeyDown} aria-expanded={props.isExpanded}>
             {props.children}
             {props.isExpanded ? <MinusIcon /> : <PlusIcon />}
         </button>
@@ -56,14 +56,14 @@ class Panel extends React.Component {
     }
 
     handleKeyDown(event) {
-        if (event.keyCode == 40) {
+        if (event.keyCode === 40) {
             event.preventDefault();
             this.setState({
                 isExpanded: true,
             });
         }
 
-        if (event.keyCode == 38) {
+        if (event.keyCode === 38) {
             event.preventDefault();
             this.setState({
                 isExpanded: false,
