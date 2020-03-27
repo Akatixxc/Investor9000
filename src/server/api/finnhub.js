@@ -1,5 +1,6 @@
 const https = require('https');
 const config = require('../config/config');
+const { logger } = require('../logger');
 
 const makeGetRequest = url => {
     return new Promise((resolve, reject) => {
@@ -12,7 +13,7 @@ const makeGetRequest = url => {
         const request = https.request(options, res => {
             let body = '';
             res.on('error', e => {
-                console.log(e);
+                logger.error(e);
                 reject();
             });
 
@@ -21,19 +22,21 @@ const makeGetRequest = url => {
             });
 
             res.on('end', () => {
-                // console.log(body);
                 resolve(body);
             });
         });
 
         request.on('error', err => {
             reject();
-            console.log(`Error on a request to finnhub: ${err}`);
+            logger.error(`Error on a request to finnhub: ${err}`);
         });
         request.end();
     });
 };
-
+/**
+ * @param {*} url kyselyURL, esim /stock/exchange
+ * @param {*} params kyselyyn liitettävät parametrit, pitää alkaa & - merkillä esim. &exchange=HE
+ */
 const getDataFromFinnhub = (url, params) => {
     const urlWithParams = `/api/v1${url}?token=${config.finnhubKey}${params || ''}`;
     return makeGetRequest(urlWithParams);

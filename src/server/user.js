@@ -6,7 +6,7 @@ const findUserByUsername = async username => {
     let conn;
     try {
         conn = await pool.getConnection();
-        const user = await conn.query('SELECT * FROM user WHERE LOWER(username) = LOWER(?);', username);
+        const user = await conn.query('SELECT * FROM users WHERE LOWER(username) = LOWER(?);', username);
         return user[0];
     } catch (err) {
         throw new Error(`Error in getting user by username: ${err}`);

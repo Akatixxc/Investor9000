@@ -5,10 +5,12 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 
+const { logger } = require('./logger');
 const FinnHub = require('./api/finnhub');
 const UserService = require('./user');
 const middlewares = require('./middlewares');
 const config = require('./config/config');
+const { job, initializeDatabase, updatePrices } = require('./jobs');
 
 const app = express();
 
@@ -17,6 +19,11 @@ app.use(express.static('dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+initializeDatabase();
+job.start();
+// Update prices funkari debuggausta varten
+// updatePrices();
 
 app.get('/api/getStockExchange', middlewares.withAuth, (req, res) => {
     // with auth middlewaresssa asetetaan käyttäjä jota voidaan käyttää näin
@@ -93,4 +100,4 @@ app.use((err, req, res, _next) => {
     res.status(err.status || 500).json({ message: err.message });
 });
 
-app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
+app.listen(process.env.PORT || 8080, () => logger.info(`Listening on port ${process.env.PORT || 8080}!`));
