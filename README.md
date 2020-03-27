@@ -159,3 +159,12 @@ DB_PASSWORD= käyttäjän salasana, kysyy asentaessa
 -   Andreas on tutkinut Finnhub apia ja pystyy aloittamaan backendin suunnittelun
 -   Milla alkaa toteuttamaan suunnitelmaansa frontin puolella
 -   Rasmus ja Anreas aloittavat backendin ja kannan toteutuksen
+
+27.3
+
+Ilta oli kuin morsian, kevät aurinko oli laskaeutumassa horisontin tuolle puolelle. Metsä havahtui lempeästä tuulahduksesta. Oli tulossa kesä...
+
+-   Frontti on siirretty reactiin
+-   Kanta päivittyy automaattisesti suomen pörssiyhtiöistä sekä osakkeiden hinnoista
+-   Taulut tehdään automaattisesti jos niitä ei ole
+-   Aloitetaan yhdistämään fronttia ja backkiä niiltä osin, mitä nyt fronttiin on tehty ja suunnitellaan lisää sen jälkeen.
