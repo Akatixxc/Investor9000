@@ -3,6 +3,8 @@ import { TextField, Button } from '@material-ui/core';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import { post } from '../api/apiHelper';
 import { parseResponseError } from '../helpers/helpers';
+import './index.css';
+import Header from './Header';
 
 function Login() {
     const history = useHistory();
@@ -35,16 +37,22 @@ function Login() {
 
     return (
         <div>
+            <Header header="Investor9000" />
+            <div className="center">
+                <p>
+                    <font color="black">Tervetuloa sijoittamaan!</font>
+                </p>
+            </div>
             <form noValidate autoComplete="off">
-                <TextField id="username" name="username" label="Username" value={username} onChange={handleChange} />
+                <TextField type="text" id="username" name="username" label="Käyttäjätunnus" value={username} onChange={handleChange} />
                 <br />
-                <TextField id="password" name="password" label="Password" type="password" value={password} onChange={handleChange} />
+                <TextField type="password" id="password" name="password" label="Salasana" type="password" value={password} onChange={handleChange} />
                 <br />
-                <Button variant="contained" onClick={handleLogin}>
-                    Submit
+                <Button type="login" variant="contained" onClick={handleLogin}>
+                    Kirjaudu sisään
                 </Button>
                 <br />
-                <Link to="/register">Not yet a user?</Link>
+                <Link to="/register">Luo uudet tunnukset täältä</Link>
             </form>
         </div>
     );

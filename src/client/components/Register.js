@@ -3,6 +3,8 @@ import { TextField, Button } from '@material-ui/core';
 import { useHistory, useLocation } from 'react-router-dom';
 import { post } from '../api/apiHelper';
 import { parseResponseError } from '../helpers/helpers';
+import './index.css';
+import Header from './Header';
 
 function Register() {
     const history = useHistory();
@@ -35,14 +37,25 @@ function Register() {
 
     return (
         <div>
-            <h1>Register as a new User</h1>
+            <Header header="Investor9000" />
+            <div className="center">
+                <p>
+                    <font color="black">Syötä tiedot. Tähdellä merkatut kentät ovat pakollisia.</font>
+                </p>
+            </div>
             <form noValidate autoComplete="off">
-                <TextField id="username" name="username" label="Username" value={username} onChange={handleChange} />
+                <TextField id="firstname" name="firstname" label="Etunimi" onChange={handleChange} required />
                 <br />
-                <TextField id="password" name="password" label="Password" type="password" value={password} onChange={handleChange} />
+                <TextField id="lastname" name="lastname" label="Sukunimi" onChange={handleChange} required />
                 <br />
-                <Button variant="contained" onClick={handleRegister}>
-                    Register
+                <TextField id="username" name="username" label="Sähköposti" value={username} onChange={handleChange} required />
+                <br />
+                <TextField id="password" name="password" label="Salasana" type="password" value={password} onChange={handleChange} minlength="8" required />
+                <br />
+                <TextField id="confirm_password" name="password" label="Vahvista salasana" type="password" minlength="8" required />
+                <br />
+                <Button type="login" variant="contained" onClick={handleRegister}>
+                    Luo tunnukset
                 </Button>
             </form>
         </div>
