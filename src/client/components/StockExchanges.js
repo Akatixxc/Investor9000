@@ -13,6 +13,8 @@ import './index.css';
 import Header from './Header';
 import User from './User';
 import Sharetable from './Sharetable';
+import Market from './Market';
+import Increment from './Increment';
 
 const user = {
     firstname: 'Sampo',
@@ -28,9 +30,8 @@ const user = {
 
 const company = {
     name: 'Yritys X',
-    quantity: '15',
-    value: '752',
-    percent: '4.17',
+    price: 23.55,
+    percent: -15.2,
 };
 
 export default class StockExhanges extends Component {
@@ -74,7 +75,16 @@ export default class StockExhanges extends Component {
                     Logout
                 </Button>
                 <Sharetable />
-
+                <div className="wrapper">
+                    <Market title={company.name}>
+                        <p>
+                            Hinta: {company.price} <br /> Kehitys: {company.percent}{' '}
+                        </p>
+                        <Increment min={0} max={100} />
+                        <p>5 x 23,55 € = 117,75 € </p>
+                        <button type="submit">Vahvista osto</button>
+                    </Market>
+                </div>
                 {stockExhange ? (
                     <TableContainer component={Paper}>
                         <Table aria-label="simple table">
