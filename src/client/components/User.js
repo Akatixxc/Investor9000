@@ -2,7 +2,7 @@ import React from 'react';
 import './index.css';
 
 // Käyttäjän nimi, pääoma ja kehitys
-const User = ({ firstname, lastname, date, capital, amount, progress, percent, balance, bamount }) => {
+const User = ({ firstname, lastname, date, capital, percent, balance }) => {
     return (
         <section>
             <p>
@@ -11,20 +11,20 @@ const User = ({ firstname, lastname, date, capital, amount, progress, percent, b
             </p>
             <div className="mydiv">
                 <h1>
-                    {capital} <br />
-                    {amount}
+                    Pääoma <br />
+                    {capital}
                 </h1>
             </div>
             <div className="mydiv">
                 <h1>
-                    {progress} <br />
+                    Kehitys <br />
                     {percent}
                 </h1>
             </div>
             <div className="mydiv">
                 <h1>
-                    {balance} <br />
-                    {bamount}
+                    Saldo <br />
+                    {balance}
                 </h1>
             </div>
         </section>

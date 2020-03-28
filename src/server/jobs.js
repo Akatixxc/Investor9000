@@ -35,7 +35,7 @@ const updatePrices = async () => {
                 FinnHub.getDataFromFinnhub('/quote', { symbol: symbols[i] })
                     .then(result => {
                         logger.trace(result);
-                        if (result.t === 0) {
+                        if (!result.t) {
                             resolve(null);
                         } else {
                             const arr = [];
@@ -135,7 +135,8 @@ const initializeDatabase = async () => {
         logger.error(`Error in creating new tables: ${err}`);
         conn.rollback();
     }
-    await updateCompanies();
+    // FIXME: poista tämä kommentista tuotantoon mentäessä
+    // await updateCompanies();
 };
 
 // Cron jobi joka pyörii joka 20 minuutti

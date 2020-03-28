@@ -1,5 +1,9 @@
 import React from 'react';
 
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Increment from './Increment';
+
 const PlusIcon = () => {
     return (
         <span className="panel__header-icon">
@@ -45,10 +49,15 @@ class Panel extends React.Component {
 
         this.state = {
             isExpanded: props.openDefault,
+            stockCount: 1,
         };
 
         this.handleToggle = this.handleToggle.bind(this);
     }
+
+    updateStockCount = value => {
+        this.setState({ stockCount: value });
+    };
 
     handleToggle() {
         const { isExpanded } = this.state;
@@ -58,14 +67,26 @@ class Panel extends React.Component {
     }
 
     render() {
-        const { isExpanded } = this.state;
-        const { children, title } = this.props;
+        const { isExpanded, stockCount } = this.state;
+        const { company, price, lastUpdated } = this.props;
+        // console.log(stockCount);
         return (
             <div className="panel">
                 <PanelHeader handleToggle={this.handleToggle} isExpanded={isExpanded}>
-                    {title}
+                    {company}
                 </PanelHeader>
-                <PanelBody isExpanded={!isExpanded}>{children}</PanelBody>
+                <PanelBody isExpanded={!isExpanded}>
+                    <Typography component="h5">
+                        Hinta: {price} € <br /> Viimeksi päivitetty: {lastUpdated}
+                    </Typography>
+                    <Increment min={1} max={100} onChangeStockCount={this.updateStockCount} />
+                    <Typography component="h5">
+                        {stockCount} x {price} € = {stockCount * price} €
+                    </Typography>
+                    <Button id="verify" type="submit">
+                        Vahvista osto
+                    </Button>
+                </PanelBody>
             </div>
         );
     }

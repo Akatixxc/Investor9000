@@ -10,6 +10,9 @@ const FinnHub = require('./api/finnhub');
 const middlewares = require('./middlewares');
 const { job, initializeDatabase } = require('./jobs');
 
+const UserService = require('./user');
+const StockService = require('./stocks');
+
 const app = express();
 
 app.use(express.static('dist'));
@@ -30,6 +33,21 @@ app.get('/api/getStockExchange', middlewares.withAuth, (req, res) => {
     FinnHub.getDataFromFinnhub('/stock/exchange', null).then(result => {
         res.json(result);
     });
+});
+
+app.get('/api/userdata', middlewares.withAuth, async (req, res) => {
+    const { user } = req;
+
+    const foundUser = await UserService.findUserByUsername(user.username);
+
+    res.json({ firstname: foundUser.first_name, lastname: foundUser.last_name, balance: foundUser.balance });
+});
+
+app.post('/api/buyStock', middlewares.withAuth, async (req, res) => {});
+
+app.get('/api/stocks', middlewares.withAuth, async (req, res) => {
+    const stocks = await StockService.getStocksFromDatabase();
+    res.json(stocks);
 });
 
 app.use((req, res, next) => {
