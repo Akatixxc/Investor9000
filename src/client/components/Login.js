@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import { post } from '../api/apiHelper';
 import { parseResponseError } from '../helpers/helpers';
 import './index.css';
@@ -9,6 +10,7 @@ import Header from './Header';
 function Login() {
     const history = useHistory();
     const location = useLocation();
+    const { enqueueSnackbar } = useSnackbar();
 
     const [inputs, setInputs] = useState({
         username: '',
@@ -20,13 +22,18 @@ function Login() {
         // disabloidaan default event, eli sivun täysi refresh
         e.preventDefault();
 
+        if (username === '' || password === '') {
+            enqueueSnackbar('Täytä molemmat kentät!', { variant: 'warning' });
+            return;
+        }
+
         post('/api/auth/login', { body: JSON.stringify({ username, password }) }, false)
             .then(() => {
                 const { from } = location.state || { from: { pathname: '/' } };
                 history.replace(from);
             })
             .catch(err => {
-                parseResponseError(err).then(error => console.log(`Login failed: ${error.message}`));
+                parseResponseError(err, 'virhe kirjautuessa sisään').then(error => enqueueSnackbar(error.message, { variant: 'error' }));
             });
     };
 

@@ -85,6 +85,26 @@ get('url', body ja muut headerit, tarviiko authentikaatiota?)
     })
 ```
 
+Lisäksi on lisätty snackbar jonka kanssa saadaan näytettyä virheet käyttäjälle
+
+käyttö react hookkien kanssa:
+
+```JS
+import { useSnackbar } from 'notistack';
+const { enqueueSnackbar } = useSnackbar();
+enqueueSnackbar('Täytä molemmat kentät!', { variant: 'warning' });
+```
+
+React class:
+
+```JS
+import { withSnackbar } from 'notistack';
+class MyComponent extends Component {
+    this.props.enqueueSnackbar('Täytä molemmat kentät!', { variant: 'warning' })
+};
+export default withSnackbar(MyComponent);
+```
+
 ### Logger
 
 Logitukseen käytetään log4js kirjastoa, sen saa käyttöön kirjoittamalla

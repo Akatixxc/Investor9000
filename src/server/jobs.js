@@ -33,7 +33,10 @@ const updatePrices = async () => {
         const promiseCall = new Promise(resolve => {
             setTimeout(() => {
                 FinnHub.getDataFromFinnhub('/quote', `&symbol=${symbols[i]}`)
-                    .then(res => JSON.parse(res))
+                    .then(res => {
+                        logger.trace(res);
+                        return JSON.parse(res);
+                    })
                     .then(result => {
                         if (result.t === 0) {
                             resolve(null);
@@ -42,6 +45,10 @@ const updatePrices = async () => {
                             arr.push(result.c, symbols[i]);
                             resolve(arr);
                         }
+                    })
+                    .catch(err => {
+                        logger.debug(`Request to finnhub failed for company ${symbols[i]}: ${err}`);
+                        resolve(null);
                     });
             }, 2000 * i);
         });

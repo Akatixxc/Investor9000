@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import { post } from '../api/apiHelper';
 import { parseResponseError } from '../helpers/helpers';
 import './index.css';
@@ -9,6 +10,7 @@ import Header from './Header';
 function Register() {
     const history = useHistory();
     const location = useLocation();
+    const { enqueueSnackbar } = useSnackbar();
 
     const [inputs, setInputs] = useState({
         firstname: '',
@@ -23,6 +25,11 @@ function Register() {
         // disabloidaan default event, eli sivun täysi refresh
         e.preventDefault();
 
+        if ((username === '', password === '', firstname === '', lastname === '', confirmPassword === '')) {
+            enqueueSnackbar('Täytä kaikki kentät', { variant: 'warning' });
+            return;
+        }
+
         if (password === confirmPassword) {
             post('/api/auth/reqister', { body: JSON.stringify({ username, password, firstname, lastname }) }, false)
                 .then(() => {
@@ -30,10 +37,10 @@ function Register() {
                     history.replace(from);
                 })
                 .catch(err => {
-                    parseResponseError(err).then(error => alert(`Registeration failed: ${error.message}`));
+                    parseResponseError(err, 'Virhe rekisteröinnissä').then(error => enqueueSnackbar(error.message, { variant: 'error' }));
                 });
         } else {
-            alert(`Salasanat eivät ole samat!`);
+            enqueueSnackbar('Salasanat eivät ole samat!', { variant: 'error' });
         }
     };
 

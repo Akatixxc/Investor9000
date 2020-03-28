@@ -10,6 +10,14 @@ Bugit ja outoudet:
     ☐ apiHelper .json() kutsu ei palauta jsonia vaan palauttaa tekstiä
     ☐ Loginin ei pitäisi antaa lähettää tyhjää formia
 
+    ☐ Yritykset pitäisi vähän väliä päivittää tauluun
+        - 1. ladataan taulusta ja finnhubista kaikki firmat
+        - 2. Tarkistetaan onko finnhubista tullut joku firma joka ei ole taulussa
+        -    -> lisätään se tauluun
+        - 3. Tarkistetaan onko taulussa jokin firma, jota ei finnhubista tullut
+        -    -> poistetaan se taulusta
+        - Tätä voisi tehdä mielestäni ennen jokaista "updatePrices" kutsua
+
 Backlog:
     ☐ JWT Tokenit eivät koskaan expiraa.
 
