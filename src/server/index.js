@@ -8,7 +8,7 @@ const { logger } = require('./logger');
 const routes = require('./routes');
 const FinnHub = require('./api/finnhub');
 const middlewares = require('./middlewares');
-const { job, initializeDatabase, updatePrices } = require('./jobs');
+const { job, initializeDatabase } = require('./jobs');
 
 const app = express();
 
@@ -20,8 +20,6 @@ app.use(cookieParser());
 
 initializeDatabase();
 job.start();
-// Update prices funkari debuggausta varten
-// updatePrices();
 
 app.use('/api', routes);
 

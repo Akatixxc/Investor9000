@@ -10,7 +10,7 @@ Bugit ja outoudet:
     ☐ apiHelper .json() kutsu ei palauta jsonia vaan palauttaa tekstiä
     ☐ Loginin ei pitäisi antaa lähettää tyhjää formia
 
-    ☐ Yritykset pitäisi vähän väliä päivittää tauluun
+    ✔ Yritykset pitäisi vähän väliä päivittää tauluun @done(20-03-28 18:22)
         - 1. ladataan taulusta ja finnhubista kaikki firmat
         - 2. Tarkistetaan onko finnhubista tullut joku firma joka ei ole taulussa
         -    -> lisätään se tauluun

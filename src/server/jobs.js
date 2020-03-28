@@ -73,26 +73,37 @@ const updatePrices = async () => {
     logger.info('Done');
 };
 
-const companiesToDatabase = async () => {
+const updateCompanies = async () => {
     logger.info('Adding companies to database.');
 
     const companies = await FinnHub.getDataFromFinnhub('/stock/symbol', '&exchange=HE');
     const parsed = JSON.parse(companies);
 
-    const mapped = parsed.map(entry => {
+    const fetchedSymbols = parsed.map(entry => {
+        return entry.symbol;
+    });
+
+    const fetchedCompanies = parsed.map(entry => {
         return [entry.symbol, entry.description];
     });
+
+    const oldCompanies = await getCompaniesFromDatabase();
+    const newCompanies = fetchedSymbols.filter(symbol => !oldCompanies.includes(symbol));
+    const outdatedCompanies = oldCompanies.filter(symbol => !fetchedSymbols.includes(symbol));
 
     const conn = await pool.getConnection();
     conn.beginTransaction(); // Aloittaa batch transaction
     try {
-        conn.batch(`INSERT INTO stock_prices (symbol, company_name) VALUES (?,?);`, mapped);
+        conn.batch(`INSERT IGNORE INTO stock_prices (symbol, company_name) VALUES (?,?);`, fetchedCompanies);
+        if (outdatedCompanies.length >= 1) {
+            conn.batch(`DELETE FROM stock_prices WHERE symbol = (?);`, outdatedCompanies);
+        }
         await conn.commit();
     } catch (err) {
         logger.error(`Error in inserting companies to the database: ${err}`);
         conn.rollback(); // errortarkistus
     }
-    logger.info(`${mapped.length} companies added to databse`);
+    logger.info(`${fetchedCompanies.length} companies in databse: ${newCompanies.length} New, ${oldCompanies.length} Old, ${outdatedCompanies.length} deleted`);
     updatePrices();
 };
 
@@ -107,7 +118,7 @@ const initializeDatabase = async () => {
             balance FLOAT NOT NULL DEFAULT 10000,
             PRIMARY KEY (username)
         )`);
-        const { warningStatus } = await conn.query(`CREATE TABLE IF NOT EXISTS stock_prices (
+        await conn.query(`CREATE TABLE IF NOT EXISTS stock_prices (
             symbol VARCHAR(50) NOT NULL,
             company_name VARCHAR(50) NOT NULL,
             current_price FLOAT NULL DEFAULT NULL,
@@ -124,20 +135,18 @@ const initializeDatabase = async () => {
             CONSTRAINT FK_bought_stocks_users FOREIGN KEY (username) REFERENCES investor.users (username) ON UPDATE RESTRICT ON DELETE RESTRICT
         )`);
         conn.end();
-        if (warningStatus === 0) {
-            await companiesToDatabase();
-        }
     } catch (err) {
         logger.error(`Error in creating new tables: ${err}`);
         conn.rollback();
     }
+    await updateCompanies();
 };
 
 // Cron jobi joka pyörii joka 20 minuutti
 const job = new CronJob(
     '0 */20 * * * *',
     async () => {
-        await updatePrices();
+        await updateCompanies();
     },
     null,
     true,
@@ -145,6 +154,5 @@ const job = new CronJob(
 );
 
 exports.job = job;
-exports.updatePrices = updatePrices;
-exports.companiesToDatabase = companiesToDatabase;
+exports.updateCompanies = updateCompanies;
 exports.initializeDatabase = initializeDatabase;
