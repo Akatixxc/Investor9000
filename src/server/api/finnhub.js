@@ -1,45 +1,26 @@
-const https = require('https');
+const querystring = require('querystring');
+const axiosBase = require('axios');
 const config = require('../config/config');
-const { logger } = require('../logger');
 
-const makeGetRequest = url => {
-    return new Promise((resolve, reject) => {
-        const options = {
-            method: 'GET',
-            hostname: `finnhub.io`,
-            path: url,
-        };
+const axios = axiosBase.create({
+    baseURL: 'https://finnhub.io',
+    headers: { 'Content-Type': 'application/json' },
+});
 
-        const request = https.request(options, res => {
-            let body = '';
-            res.on('error', e => {
-                logger.error(e);
-                reject();
-            });
+const makeAxiosRequest = async url => {
+    const result = await axios.get(url);
+    const { data } = result;
 
-            res.on('data', d => {
-                body += d;
-            });
-
-            res.on('end', () => {
-                resolve(body);
-            });
-        });
-
-        request.on('error', err => {
-            reject();
-            logger.error(`Error on a request to finnhub: ${err}`);
-        });
-        request.end();
-    });
+    return data;
 };
+
 /**
- * @param {*} url kyselyURL, esim /stock/exchange
- * @param {*} params kyselyyn liitettävät parametrit, pitää alkaa & - merkillä esim. &exchange=HE
+ * @param {string} url kyselyURL, esim /stock/exchange
+ * @param {Object} params kyselyyn liitettävät parametrit
  */
 const getDataFromFinnhub = (url, params) => {
-    const urlWithParams = `/api/v1${url}?token=${config.finnhubKey}${params || ''}`;
-    return makeGetRequest(urlWithParams);
+    const urlWithParams = `/api/v1${url}?token=${config.finnhubKey}&${querystring.stringify(params) || ''}`;
+    return makeAxiosRequest(urlWithParams);
 };
 
 module.exports = {
