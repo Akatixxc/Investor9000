@@ -29,15 +29,12 @@ const updatePrices = async () => {
     const symbols = await getCompaniesFromDatabase();
 
     const calls = [];
-    for (let i = 0; i <= symbols.length; i += 1) {
+    for (let i = 0; i < symbols.length; i += 1) {
         const promiseCall = new Promise(resolve => {
             setTimeout(() => {
-                FinnHub.getDataFromFinnhub('/quote', `&symbol=${symbols[i]}`)
-                    .then(res => {
-                        logger.trace(res);
-                        return JSON.parse(res);
-                    })
+                FinnHub.getDataFromFinnhub('/quote', { symbol: symbols[i] })
                     .then(result => {
+                        logger.trace(result);
                         if (result.t === 0) {
                             resolve(null);
                         } else {
@@ -76,14 +73,13 @@ const updatePrices = async () => {
 const updateCompanies = async () => {
     logger.info('Adding companies to database.');
 
-    const companies = await FinnHub.getDataFromFinnhub('/stock/symbol', '&exchange=HE');
-    const parsed = JSON.parse(companies);
+    const companies = await FinnHub.getDataFromFinnhub('/stock/symbol', { exchange: 'HE' });
 
-    const fetchedSymbols = parsed.map(entry => {
+    const fetchedSymbols = companies.map(entry => {
         return entry.symbol;
     });
 
-    const fetchedCompanies = parsed.map(entry => {
+    const fetchedCompanies = companies.map(entry => {
         return [entry.symbol, entry.description];
     });
 
