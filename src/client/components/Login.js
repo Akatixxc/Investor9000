@@ -20,7 +20,7 @@ function Login() {
         // disabloidaan default event, eli sivun täysi refresh
         e.preventDefault();
 
-        post('/api/login', { body: JSON.stringify({ username, password }) }, false)
+        post('/api/auth/login', { body: JSON.stringify({ username, password }) }, false)
             .then(() => {
                 const { from } = location.state || { from: { pathname: '/' } };
                 history.replace(from);

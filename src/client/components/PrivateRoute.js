@@ -10,7 +10,7 @@ function PrivateRoute({ children, ...rest }) {
     const [isLoading, setIsLoading] = useState(true);
 
     const checkAuthentication = () =>
-        get('/api/checkToken', null, true)
+        get('/api/auth/checkToken', null, true)
             .then(() => {
                 setIsAuthenticated(true);
             })

@@ -24,17 +24,16 @@ function Register() {
         e.preventDefault();
 
         if (password === confirmPassword) {
-            post('/api/reqister', { body: JSON.stringify({ username, password, firstname, lastname }) }, false)
+            post('/api/auth/reqister', { body: JSON.stringify({ username, password, firstname, lastname }) }, false)
                 .then(() => {
                     const { from } = location.state || { from: { pathname: '/' } };
                     history.replace(from);
                 })
                 .catch(err => {
-                    parseResponseError(err).then(error => console.log(`Registeration failed: ${error.message}`));
+                    parseResponseError(err).then(error => alert(`Registeration failed: ${error.message}`));
                 });
         } else {
-            // TODO: paremmannäköiset alertit
-            alert('Salasanat eivät ole samat!');
+            alert(`Salasanat eivät ole samat!`);
         }
     };
 
@@ -58,7 +57,15 @@ function Register() {
                 <br />
                 <TextField id="password" name="password" label="Salasana" type="password" value={password} onChange={handleChange} minLength="8" required />
                 <br />
-                <TextField id="confirmPassword" name="confirmPassword" label="Vahvista salasana" type="password" minLength="8" required />
+                <TextField
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    label="Vahvista salasana"
+                    type="password"
+                    minLength="8"
+                    onChange={handleChange}
+                    required
+                />
                 <br />
                 <Button type="submit" variant="contained" onClick={handleRegister}>
                     Luo tunnukset

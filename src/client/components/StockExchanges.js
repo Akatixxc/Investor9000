@@ -33,11 +33,7 @@ export default class StockExhanges extends Component {
         this.state = {};
     }
 
-    componentDidMount() {
-        get('/api/getStockExchange', null, true)
-            // Jostain syystä result on textimuodossa eikä jsonina, joten se pitää parsia vielä erikseen, tätä voisi tutkia, en jaksanut enempää
-            .then(result => console.log(result));
-    }
+    componentDidMount() {}
 
     render() {
         return (
@@ -59,7 +55,7 @@ export default class StockExhanges extends Component {
                     type="verify"
                     variant="contained"
                     onClick={() => {
-                        get(`/api/logout`, null, true).then(history.push('/login'));
+                        get(`/api/auth/logout`, null, true).then(history.push('/login'));
                     }}
                 >
                     Logout

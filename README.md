@@ -100,6 +100,12 @@ logger.error('Cheese is too ripe!');
 logger.fatal('Cheese was breeding ground for listeria.');
 ```
 
+### Express routet
+
+Express routet alkavat index.js tiedostosta app.use('/api', routes);
+routes.js tiedostoon määritellään ylätason routet esim. auth
+ja vasta authRoutes sisältä löytyy kaikki authentikaatioon liittyvien reittien koodit
+
 ## Database
 
 [MariaDB](https://mariadb.com/) lataa & asenna

@@ -7,7 +7,8 @@ Aloitus:
 
 Bugit ja outoudet:
     ☐ Circular progress ympyrä lataa kahdesti, luultavasti pitää vaihtaa private routesta niin ettei näytä sitä kun se checkkaa tokenia
-    ☐ apiHelper .json() kutsu ei palauta jsonia vaan palauttaa tekstiä'
+    ☐ apiHelper .json() kutsu ei palauta jsonia vaan palauttaa tekstiä
+    ☐ Loginin ei pitäisi antaa lähettää tyhjää formia
 
 Backlog:
     ☐ JWT Tokenit eivät koskaan expiraa.
