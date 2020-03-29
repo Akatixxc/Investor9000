@@ -1,16 +1,17 @@
 import React from 'react';
 import './index.css';
 import Button from '@material-ui/core/Button';
+import Moment from 'react-moment';
 import { get } from '../api/apiHelper';
 import history from './history';
 
 // Käyttäjän nimi, pääoma ja kehitys
-const User = ({ firstname, lastname, date, capital, percent, balance }) => {
+const User = ({ firstname, lastname, capital, date, percent, balance }) => {
     return (
         <section>
             <p>
                 {firstname} {lastname} <br />
-                {date}
+                <Moment format="DD-MM-YYYY">{date}</Moment>
             </p>
             <div className="mydiv">
                 <h1>

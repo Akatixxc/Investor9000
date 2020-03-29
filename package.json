@@ -40,9 +40,11 @@
         "jsonwebtoken": "^8.5.1",
         "log4js": "^6.1.2",
         "mariadb": "^2.2.0",
+        "moment": "^2.24.0",
         "notistack": "^0.9.9",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",
+        "react-moment": "^0.9.7",
         "react-router-dom": "^5.1.2",
         "reactstrap": "^8.4.1"
     },

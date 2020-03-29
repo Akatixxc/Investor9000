@@ -44,12 +44,14 @@ class StockExhanges extends Component {
 
     render() {
         const { firstname, lastname, balance, stocks } = this.state;
+        const moment = require('moment');
+        const today = moment();
 
         return (
             <div>
                 <Header header="Investor9000" />
 
-                <User firstname={firstname} lastname={lastname} balance={balance} date="2020-03-38" capital={8900} percent="-3,14 %" />
+                <User firstname={firstname} lastname={lastname} balance={balance} date={today} capital={8900} percent="-3,14 %" />
                 <Sharetable />
                 <div className="wrapper">
                     {stocks ? (
