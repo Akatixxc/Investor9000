@@ -43,11 +43,27 @@ app.get('/api/userdata', middlewares.withAuth, async (req, res) => {
     res.json({ firstname: foundUser.first_name, lastname: foundUser.last_name, balance: foundUser.balance });
 });
 
-app.post('/api/buyStock', middlewares.withAuth, async (req, res) => {});
-
 app.get('/api/stocks', middlewares.withAuth, async (req, res) => {
     const stocks = await StockService.getStocksFromDatabase();
     res.json(stocks);
+});
+
+app.get('/api/stocks/userAssets', middlewares.withAuth, async (req, res) => {
+    const { user } = req;
+    const assets = await StockService.getUserAssets(user.username);
+    res.json(assets);
+});
+
+app.post('/api/stocks/buy', middlewares.withAuth, async (req, res, next) => {
+    const { user } = req;
+    const { symbol, stockCount } = req.body;
+
+    try {
+        await StockService.buyStock(user.username, symbol, stockCount);
+        res.sendStatus(204);
+    } catch (err) {
+        next(err);
+    }
 });
 
 app.use((req, res, next) => {

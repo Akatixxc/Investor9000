@@ -110,7 +110,7 @@ input[type='submit']:hover {
     background-color: #45a049;
 }
 
-button[type='sell'] {
+#sell {
     width: 50px;
     background-color: #4caf50;
     color: white;

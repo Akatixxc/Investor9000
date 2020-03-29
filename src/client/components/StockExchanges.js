@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
+import { withSnackbar } from 'notistack';
+import moment from 'moment';
 import { get } from '../api/apiHelper';
 import './index.css';
 import Header from './Header';
@@ -44,8 +46,7 @@ class StockExhanges extends Component {
 
     render() {
         const { firstname, lastname, balance, stocks } = this.state;
-        const moment = require('moment');
-        const today = moment();
+        const today = moment().format('DD-MM-YYYY');
 
         return (
             <div>
@@ -66,4 +67,4 @@ class StockExhanges extends Component {
         );
     }
 }
-export default StockExhanges;
+export default withSnackbar(StockExhanges);

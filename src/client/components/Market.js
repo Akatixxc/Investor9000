@@ -2,7 +2,11 @@ import React from 'react';
 
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { withSnackbar } from 'notistack';
 import Increment from './Increment';
+
+import { post } from '../api/apiHelper';
+import { parseResponseError } from '../helpers/helpers';
 
 const PlusIcon = () => {
     return (
@@ -53,6 +57,7 @@ class Panel extends React.Component {
         };
 
         this.handleToggle = this.handleToggle.bind(this);
+        this.buyStock = this.buyStock.bind(this);
     }
 
     updateStockCount = value => {
@@ -66,10 +71,22 @@ class Panel extends React.Component {
         });
     }
 
+    buyStock() {
+        const { symbol, company, enqueueSnackbar } = this.props;
+        const { stockCount } = this.state;
+        post('/api/stocks/buy', { body: JSON.stringify({ symbol, stockCount }) }, true)
+            .then(() => {
+                enqueueSnackbar(`${stockCount} osaketta yritykseltä ${company} ostettu onnistuneesti`, { variant: 'success' });
+            })
+            .catch(err => {
+                parseResponseError(err, 'Virhe ostaessa osaketta').then(error => enqueueSnackbar(error.message, { variant: 'error' }));
+            });
+    }
+
     render() {
         const { isExpanded, stockCount } = this.state;
         const { company, price, lastUpdated } = this.props;
-        // console.log(stockCount);
+
         return (
             <div className="panel">
                 <PanelHeader handleToggle={this.handleToggle} isExpanded={isExpanded}>
@@ -83,7 +100,7 @@ class Panel extends React.Component {
                     <Typography component="h5">
                         {stockCount} x {price} € = {stockCount * price} €
                     </Typography>
-                    <Button id="verify" type="submit">
+                    <Button id="verify" type="submit" onClick={this.buyStock}>
                         Vahvista osto
                     </Button>
                 </PanelBody>
@@ -92,4 +109,4 @@ class Panel extends React.Component {
     }
 }
 
-export default Panel;
+export default withSnackbar(Panel);

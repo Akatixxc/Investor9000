@@ -1,7 +1,6 @@
 import React from 'react';
 import './index.css';
 import Button from '@material-ui/core/Button';
-import Moment from 'react-moment';
 import { get } from '../api/apiHelper';
 import history from './history';
 
@@ -11,7 +10,7 @@ const User = ({ firstname, lastname, capital, date, percent, balance }) => {
         <section>
             <p>
                 {firstname} {lastname} <br />
-                <Moment format="DD-MM-YYYY">{date}</Moment>
+                {date}
             </p>
             <div className="mydiv">
                 <h1>
