@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { get } from '../api/apiHelper';
-import history from './history';
 import './index.css';
 import Header from './Header';
 import User from './User';
@@ -52,15 +50,6 @@ class StockExhanges extends Component {
                 <Header header="Investor9000" />
 
                 <User firstname={firstname} lastname={lastname} balance={balance} date="2020-03-38" capital={8900} percent="-3,14 %" />
-                <Button
-                    type="verify"
-                    variant="contained"
-                    onClick={() => {
-                        get(`/api/auth/logout`, null, true).then(history.push('/login'));
-                    }}
-                >
-                    Logout
-                </Button>
                 <Sharetable />
                 <div className="wrapper">
                     {stocks ? (

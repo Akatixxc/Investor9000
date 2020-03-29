@@ -10,7 +10,6 @@ const useStyles = makeStyles({
         objectFit: 'scale-down',
     },
     header: {
-        TransitionTimingFunction: 'linear',
         position: 'fixed',
         top: '0',
         height: '200px',
@@ -19,7 +18,7 @@ const useStyles = makeStyles({
         border: '1px solid black',
         background: 'linear-gradient(114deg, rgba(0, 0, 0, 1) 0%, rgba(45, 45, 45, 1) 100%)',
         color: '#ffffff',
-        transition: 'all .1s ease-in',
+        transition: 'all .15s ease-in',
     },
     headerScrolled: {
         position: 'fixed',
@@ -30,15 +29,16 @@ const useStyles = makeStyles({
         border: '1px solid black',
         background: 'linear-gradient(114deg, rgba(0, 0, 0, 1) 0%, rgba(45, 45, 45, 1) 100%)',
         color: '#ffffff',
-        transition: 'all .1s ease-in',
+        transition: 'all .15s ease-in',
+        zIndex: '1',
     },
     headerGhost: {
         height: '200px',
-        transition: 'all .1s ease-in',
+        transition: 'all .15s ease-in',
     },
     headerGhostScrolled: {
         height: '50px',
-        transition: 'all .1s ease-in',
+        transition: 'all .15s ease-in',
     },
 });
 

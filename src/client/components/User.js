@@ -1,5 +1,8 @@
 import React from 'react';
 import './index.css';
+import Button from '@material-ui/core/Button';
+import { get } from '../api/apiHelper';
+import history from './history';
 
 // Käyttäjän nimi, pääoma ja kehitys
 const User = ({ firstname, lastname, date, capital, percent, balance }) => {
@@ -27,6 +30,15 @@ const User = ({ firstname, lastname, date, capital, percent, balance }) => {
                     {balance}
                 </h1>
             </div>
+            <Button
+                variant="contained"
+                onClick={e => {
+                    e.preventDefault();
+                    get(`/api/auth/logout`, null, true).then(history.push('/login'));
+                }}
+            >
+                Logout
+            </Button>
         </section>
     );
 };
