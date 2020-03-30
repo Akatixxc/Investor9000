@@ -72,11 +72,12 @@ class Panel extends React.Component {
     }
 
     buyStock() {
-        const { symbol, company, enqueueSnackbar } = this.props;
+        const { symbol, company, enqueueSnackbar, onBuyStock } = this.props;
         const { stockCount } = this.state;
         post('/api/stocks/buy', { body: JSON.stringify({ symbol, stockCount }) }, true)
             .then(() => {
                 enqueueSnackbar(`${stockCount} osaketta yritykseltä ${company} ostettu onnistuneesti`, { variant: 'success' });
+                onBuyStock();
             })
             .catch(err => {
                 parseResponseError(err, 'Virhe ostaessa osaketta').then(error => enqueueSnackbar(error.message, { variant: 'error' }));

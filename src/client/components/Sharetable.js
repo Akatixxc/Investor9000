@@ -1,25 +1,10 @@
-import React, { Component } from 'react';
-import { get } from '../api/apiHelper';
+import React, { PureComponent } from 'react';
 import './index.css';
 
 // Käyttäjän omat sijoitukset
-class Table extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            shares: [],
-        };
-    }
-
-    componentDidMount() {
-        get('/api/stocks/userAssets', null, true).then(result => {
-            this.setState({ shares: result });
-            console.log(result);
-        });
-    }
-
+class Table extends PureComponent {
     render() {
-        const { shares } = this.state;
+        const { shares } = this.props;
 
         return (
             <div>
