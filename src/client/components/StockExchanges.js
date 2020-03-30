@@ -79,6 +79,21 @@ class StockExhanges extends Component {
         this.countCapitalAndDevelopment();
     };
 
+    countCapitalAndDevelopment = () => {
+        const { shares, balance } = this.state;
+        let buyPriceTotal = 0;
+        let marketValueTotal = 0;
+
+        shares.forEach(share => {
+            buyPriceTotal += share.totalBuyPrice;
+            marketValueTotal += share.totalMarketValue;
+        });
+
+        console.log(shares);
+
+        this.setState({ capital: marketValueTotal + balance, development: (marketValueTotal / buyPriceTotal) * 100 - 100 });
+    };
+
     render() {
         const { firstname, lastname, balance, capital, development, stocks, shares } = this.state;
         const today = moment().format('DD-MM-YYYY');

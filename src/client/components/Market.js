@@ -1,5 +1,5 @@
 import React from 'react';
-
+import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withSnackbar } from 'notistack';
@@ -87,7 +87,7 @@ class Panel extends React.Component {
     render() {
         const { isExpanded, stockCount } = this.state;
         const { company, price, lastUpdated } = this.props;
-
+        const date = moment(lastUpdated);
         return (
             <div className="panel">
                 <PanelHeader handleToggle={this.handleToggle} isExpanded={isExpanded}>
@@ -95,7 +95,7 @@ class Panel extends React.Component {
                 </PanelHeader>
                 <PanelBody isExpanded={!isExpanded}>
                     <Typography component="h5">
-                        Hinta: {price} € <br /> Viimeksi päivitetty: {lastUpdated}
+                        Hinta: {price} € <br /> Viimeksi päivitetty: {date.format('DD-MM-YYYY HH:mm')}
                     </Typography>
                     <Increment min={1} max={100} onChangeStockCount={this.updateStockCount} />
                     <Typography component="h5">
