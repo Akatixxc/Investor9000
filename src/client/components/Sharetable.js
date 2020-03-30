@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import './index.css';
+import { numberFormat } from '../helpers/helpers';
 
 // Käyttäjän omat sijoitukset
 class Table extends PureComponent {
@@ -21,8 +22,8 @@ class Table extends PureComponent {
                             <tr key={row.symbol}>
                                 <td>{row.name}</td>
                                 <td>{row.count}</td>
-                                <td>{row.totalMarketValue}</td>
-                                <td>{row.profitPrecentage}</td>
+                                <td>{numberFormat(row.totalMarketValue)}</td>
+                                <td>{numberFormat(row.profitPrecentage)}</td>
                                 <td>
                                     <button id="sell" type="submit">
                                         Myy

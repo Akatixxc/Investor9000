@@ -6,7 +6,7 @@ import { withSnackbar } from 'notistack';
 import Increment from './Increment';
 
 import { post } from '../api/apiHelper';
-import { parseResponseError } from '../helpers/helpers';
+import { parseResponseError, numberFormat } from '../helpers/helpers';
 
 const PlusIcon = () => {
     return (
@@ -88,6 +88,7 @@ class Panel extends React.Component {
         const { isExpanded, stockCount } = this.state;
         const { company, price, lastUpdated } = this.props;
         const date = moment(lastUpdated);
+        const formprice = numberFormat(price);
         return (
             <div className="panel">
                 <PanelHeader handleToggle={this.handleToggle} isExpanded={isExpanded}>
@@ -95,11 +96,11 @@ class Panel extends React.Component {
                 </PanelHeader>
                 <PanelBody isExpanded={!isExpanded}>
                     <Typography component="h5">
-                        Hinta: {price} € <br /> Viimeksi päivitetty: {date.format('DD-MM-YYYY HH:mm')}
+                        Hinta: {formprice} € <br /> Viimeksi päivitetty: {date.format('DD-MM-YYYY HH:mm')}
                     </Typography>
                     <Increment min={1} max={100} onChangeStockCount={this.updateStockCount} />
                     <Typography component="h5">
-                        {stockCount} x {price} € = {stockCount * price} €
+                        {stockCount} x {formprice} € = {numberFormat(stockCount * formprice)} €
                     </Typography>
                     <Button id="verify" type="submit" onClick={this.buyStock}>
                         Vahvista osto

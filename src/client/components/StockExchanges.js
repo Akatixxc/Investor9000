@@ -8,7 +8,7 @@ import Header from './Header';
 import User from './User';
 import Sharetable from './Sharetable';
 import Market from './Market';
-import { parseResponseError } from '../helpers/helpers';
+import { parseResponseError, numberFormat } from '../helpers/helpers';
 
 class StockExhanges extends Component {
     constructor() {
@@ -65,7 +65,6 @@ class StockExhanges extends Component {
         const { shares, balance } = this.state;
         let buyPriceTotal = 0;
         let marketValueTotal = 0;
-
         shares.forEach(share => {
             buyPriceTotal += share.totalBuyPrice;
             marketValueTotal += share.totalMarketValue;
@@ -102,7 +101,14 @@ class StockExhanges extends Component {
             <div>
                 <Header header="Investor9000" />
 
-                <User firstname={firstname} lastname={lastname} balance={balance} date={today} capital={capital} percent={development} />
+                <User
+                    firstname={firstname}
+                    lastname={lastname}
+                    balance={numberFormat(balance)}
+                    date={today}
+                    capital={numberFormat(capital)}
+                    percent={numberFormat(development)}
+                />
                 <Sharetable shares={shares} />
                 <div className="wrapper">
                     {stocks ? (
