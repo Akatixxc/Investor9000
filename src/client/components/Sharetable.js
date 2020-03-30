@@ -1,9 +1,23 @@
 import React, { PureComponent } from 'react';
+import { withSnackbar } from 'notistack';
+import { post } from '../api/apiHelper';
+import { parseResponseError, numberFormat } from '../helpers/helpers';
 import './index.css';
-import { numberFormat } from '../helpers/helpers';
 
 // Käyttäjän omat sijoitukset
 class Table extends PureComponent {
+    sellStock(symbol, company) {
+        const { enqueueSnackbar, onSellStock } = this.props;
+        post('/api/stocks/sell', { body: JSON.stringify({ symbol }) }, true)
+            .then(() => {
+                enqueueSnackbar(`Yrityksen ${company} osakkeet myyty onnistuneesti`, { variant: 'success' });
+                onSellStock();
+            })
+            .catch(err => {
+                parseResponseError(err, 'Virhe osakkeen myynnissä').then(error => enqueueSnackbar(error.message, { variant: 'error' }));
+            });
+    }
+
     render() {
         const { shares } = this.props;
 
@@ -22,10 +36,10 @@ class Table extends PureComponent {
                             <tr key={row.symbol}>
                                 <td>{row.name}</td>
                                 <td>{row.count}</td>
-                                <td>{numberFormat(row.totalMarketValue)}</td>
-                                <td>{numberFormat(row.profitPrecentage)}</td>
+                                <td>{numberFormat(row.totalMarketValue)} €</td>
+                                <td>{numberFormat(row.profitPrecentage)} %</td>
                                 <td>
-                                    <button id="sell" type="submit">
+                                    <button id="sell" type="submit" onClick={() => this.sellStock(row.symbol, row.name)}>
                                         Myy
                                     </button>
                                 </td>
@@ -38,4 +52,4 @@ class Table extends PureComponent {
     }
 }
 
-export default Table;
+export default withSnackbar(Table);

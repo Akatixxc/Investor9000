@@ -15,19 +15,19 @@ const User = ({ firstname, lastname, capital, date, percent, balance }) => {
             <div className="mydiv">
                 <h1>
                     Pääoma <br />
-                    {capital}
+                    {capital} €
                 </h1>
             </div>
             <div className="mydiv">
                 <h1>
                     Kehitys <br />
-                    {percent}
+                    {percent} %
                 </h1>
             </div>
             <div className="mydiv">
                 <h1>
                     Saldo <br />
-                    {balance}
+                    {balance} €
                 </h1>
             </div>
             <Button

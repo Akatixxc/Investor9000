@@ -47,6 +47,35 @@ const buyStock = async (username, symbol, amount) => {
     conn.end();
 };
 
+const sellStock = async (username, symbol) => {
+    let conn;
+    let queryResults = [];
+    try {
+        conn = await pool.getConnection();
+        queryResults = await conn.query(
+            'SELECT stock_count, current_price FROM bought_stocks, stock_prices WHERE symbol = company_symbol AND username = ? AND symbol = ?;',
+            [username, symbol],
+        );
+
+        let totalValue = 0;
+        queryResults.forEach(queryResult => {
+            const { stock_count: count, current_price: currentPrice } = queryResult;
+            totalValue += count * currentPrice;
+        });
+
+        await conn.query('UPDATE users SET balance = balance + ? WHERE username = ?', [totalValue, username]);
+
+        await conn.query('DELETE FROM bought_stocks WHERE username = ? AND company_symbol = ?', [username, symbol]);
+    } catch (err) {
+        logger.error(`Error in getting user assets for company ${symbol}: ${err}`);
+        throw new Error(`Error in getting user assets for company ${symbol}`);
+    } finally {
+        if (conn) {
+            conn.end();
+        }
+    }
+};
+
 const getUserAssets = async username => {
     let conn;
     let queryResults = [];
@@ -93,4 +122,4 @@ const getUserAssets = async username => {
     return assets;
 };
 
-module.exports = { getStocksFromDatabase, buyStock, getUserAssets };
+module.exports = { getStocksFromDatabase, buyStock, sellStock, getUserAssets };

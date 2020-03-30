@@ -26,15 +26,6 @@ job.start();
 
 app.use('/api', routes);
 
-app.get('/api/getStockExchange', middlewares.withAuth, (req, res) => {
-    // with auth middlewaresssa asetetaan käyttäjä jota voidaan käyttää näin
-    // const { user } = req;
-
-    FinnHub.getDataFromFinnhub('/stock/exchange', null).then(result => {
-        res.json(result);
-    });
-});
-
 app.get('/api/userdata', middlewares.withAuth, async (req, res) => {
     const { user } = req;
 
@@ -60,6 +51,18 @@ app.post('/api/stocks/buy', middlewares.withAuth, async (req, res, next) => {
 
     try {
         await StockService.buyStock(user.username, symbol, stockCount);
+        res.sendStatus(204);
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.post('/api/stocks/sell', middlewares.withAuth, async (req, res, next) => {
+    const { user } = req;
+    const { symbol } = req.body;
+
+    try {
+        await StockService.sellStock(user.username, symbol);
         res.sendStatus(204);
     } catch (err) {
         next(err);

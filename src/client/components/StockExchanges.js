@@ -109,7 +109,7 @@ class StockExhanges extends Component {
                     capital={numberFormat(capital)}
                     percent={numberFormat(development)}
                 />
-                <Sharetable shares={shares} />
+                <Sharetable shares={shares} onSellStock={this.updateState} />
                 <div className="wrapper">
                     {stocks ? (
                         stocks.map(row => (
