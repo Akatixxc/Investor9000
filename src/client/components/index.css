@@ -46,10 +46,6 @@ caption {
     padding: 5px;
 }
 
-middlesection {
-    flex-direction: row;
-}
-
 form {
     padding: 100px;
     text-align: left;
@@ -82,34 +78,6 @@ TextField[type='password'] {
     font-family: 'Roboto', sans-serif;
 }
 
-input[type='submit'] {
-    width: 100%;
-    background-color: #4caf50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Roboto', sans-serif;
-}
-
-input[type='button'] {
-    width: 100%;
-    background-color: #4caf50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Roboto', sans-serif;
-}
-
-input[type='submit']:hover {
-    background-color: #45a049;
-}
-
 #sell {
     width: 50px;
     background-color: #4caf50;
@@ -121,30 +89,6 @@ input[type='submit']:hover {
     cursor: pointer;
     font-family: 'Roboto', sans-serif;
 }
-
-button[type='add'] {
-    width: 3%;
-    background-color: #4caf50;
-    color: white;
-    padding: 10px;
-    margin: ;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Roboto', sans-serif;
-}
-
-/* button[type='verify'] {
-    width: 8%;
-    background-color: #4caf50;
-    color: white;
-    padding: 10px;
-    margin: 0 0 8px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Roboto', sans-serif;
-} */
 
 #verify {
     width: 8%;
@@ -168,10 +112,6 @@ button[type='submit'] {
     border-radius: 4px;
     cursor: pointer;
     font-family: 'Roboto', sans-serif;
-}
-
-button[type='login']:hover {
-    background-color: #45a049;
 }
 
 a:link {
@@ -275,8 +215,6 @@ h3 {
 }
 
 .panel {
-    margin-bottom: 1rem;
-
     h2 {
         font-size: 1.25rem;
         margin: 0;
@@ -378,7 +316,7 @@ button.panel__header {
     text-align: center;
     line-height: 40px;
     font-size: 16px;
-    color: #6c6dff;
+    color: black;
     letter-spacing: -1px;
 }
 

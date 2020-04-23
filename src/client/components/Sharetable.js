@@ -23,7 +23,7 @@ class Table extends PureComponent {
 
         return (
             <div>
-                <h1 id="title">Oma sijoitukset</h1>
+                <h1 id="title">Omat sijoitukset</h1>
                 <table id="shares">
                     <tbody>
                         <tr>
