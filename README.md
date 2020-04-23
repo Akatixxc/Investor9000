@@ -1,5 +1,7 @@
 # Soveltava projekti, Rasmus Haavisto, Andreas Säilä, Milla Sipilä
 
+# Sovellus on livenä osoitteessa https://investor9000.tech/
+
 ## Vaaditut VSCode plugarit
 
 -   ESlint

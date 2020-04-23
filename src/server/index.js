@@ -44,8 +44,6 @@ app.use((err, req, res, _next) => {
     res.status(err.status || 500).json({ message: err.message });
 });
 
-app.listen(process.env.PORT || 8080, () => logger.info(`Listening on port ${process.env.PORT || 8080}!`));
-
 if (process.env.NODE_ENV === 'production') {
     https
         .createServer(
