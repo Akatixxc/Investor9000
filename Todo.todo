@@ -20,6 +20,7 @@ Bugit ja outoudet:
 
 Backlog:
     ☐ JWT Tokenit eivät koskaan expiraa.
+    ☐ Pitäisikö hinta vielä kysellä finnhubista ennen ostoa/myyntiä?
 
 Toteutettavat asiat:
 
