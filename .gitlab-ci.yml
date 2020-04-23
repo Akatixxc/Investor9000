@@ -1,18 +1,14 @@
 image: node:latest
 
 stages:
-    - build
     - test
 
 cache:
     paths:
         - node_modules/
 
-Dependencies:
-    stage: build
-    script:
-        - npm install
-
 Testing:
     stage: test
-    script: npm test
+    script:
+        - npm install
+        - npm run test
