@@ -136,7 +136,7 @@ const initializeDatabase = async () => {
         conn.rollback();
     }
     // FIXME: poista tämä kommentista tuotantoon mentäessä
-    // await updateCompanies();
+    await updateCompanies();
 };
 
 // Cron jobi joka pyörii joka 20 minuutti
