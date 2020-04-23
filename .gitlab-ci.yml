@@ -8,14 +8,11 @@ cache:
     paths:
         - node_modules/
 
-install_dependencies:
+Dependencies:
     stage: build
     script:
         - npm install
-    artifacts:
-    paths:
-        - node_modules/
 
-testing_testing:
+Testing:
     stage: test
     script: npm test
