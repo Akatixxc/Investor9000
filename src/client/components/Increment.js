@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 class InputNumber extends React.Component {
     constructor() {
         super();
 
         this.state = {
-            value: 0,
+            value: 1,
         };
 
         this.increment = this.increment.bind(this);
@@ -14,21 +13,22 @@ class InputNumber extends React.Component {
     }
 
     increment() {
-        const { max } = this.props;
+        const { max, onChangeStockCount } = this.props;
         const { value } = this.state;
 
         if (value >= max) return;
-
         this.setState({ value: value + 1 });
+        onChangeStockCount(value + 1);
     }
 
     decrement() {
-        const { min } = this.props;
+        const { min, onChangeStockCount } = this.props;
         const { value } = this.state;
 
         if (value <= min) return;
 
         this.setState({ value: value - 1 });
+        onChangeStockCount(value - 1);
     }
 
     render() {
@@ -46,15 +46,5 @@ class InputNumber extends React.Component {
         );
     }
 }
-
-InputNumber.propTypes = {
-    max: PropTypes.number,
-    min: PropTypes.number,
-};
-
-InputNumber.defaultProps = {
-    min: 0,
-    max: 100,
-};
 
 export default InputNumber;

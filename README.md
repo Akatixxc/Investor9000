@@ -194,3 +194,10 @@ Ilta oli kuin morsian, kevät aurinko oli laskaeutumassa horisontin tuolle puole
 -   Kanta päivittyy automaattisesti suomen pörssiyhtiöistä sekä osakkeiden hinnoista
 -   Taulut tehdään automaattisesti jos niitä ei ole
 -   Aloitetaan yhdistämään fronttia ja backkiä niiltä osin, mitä nyt fronttiin on tehty ja suunnitellaan lisää sen jälkeen.
+
+30.3
+
+-   Frontin ja backin yhdistys on raakaversiona ja rankkaa testausta vailla valmis
+-   Mahdollinen ongelma ilmeni kannan kanssa, pool vuotaa connectioneja jostain
+-   Andreas teki uuden logon sovellukselle
+-   Tästä eteenpäin kehitetään fronttia näyttämään paremmalta sekä keksitään uutta ja parannettavaa sovellukseen
