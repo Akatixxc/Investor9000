@@ -8,7 +8,8 @@
         "start": "yarn run build && node src/server/index.js",
         "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
         "server": "nodemon src/server/index.js",
-        "dev": "concurrently \"yarn run server\" \"yarn run client\""
+        "dev": "concurrently \"yarn run server\" \"yarn run client\"",
+        "test": "mocha 'src/server/test' --exit"
     },
     "author": "Rasmus Haavisto",
     "license": "ISC",
@@ -40,6 +41,8 @@
         "jsonwebtoken": "^8.5.1",
         "log4js": "^6.1.2",
         "mariadb": "^2.2.0",
+        "mocha": "^7.1.1",
+        "moment": "^2.24.0",
         "notistack": "^0.9.9",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",

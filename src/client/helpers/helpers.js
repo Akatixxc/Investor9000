@@ -5,4 +5,8 @@ const parseResponseError = (err, fallbackMessage) =>
           })
         : Promise.resolve({ message: fallbackMessage });
 
-module.exports = { parseResponseError };
+const numberFormat = value => {
+    return Number.parseFloat(value).toFixed(2);
+};
+
+module.exports = { parseResponseError, numberFormat };

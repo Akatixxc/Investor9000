@@ -6,9 +6,10 @@ const cookieParser = require('cookie-parser');
 
 const { logger } = require('./logger');
 const routes = require('./routes');
-const FinnHub = require('./api/finnhub');
 const middlewares = require('./middlewares');
 const { job, initializeDatabase } = require('./jobs');
+
+const UserService = require('./user');
 
 const app = express();
 
@@ -23,13 +24,12 @@ job.start();
 
 app.use('/api', routes);
 
-app.get('/api/getStockExchange', middlewares.withAuth, (req, res) => {
-    // with auth middlewaresssa asetetaan käyttäjä jota voidaan käyttää näin
-    // const { user } = req;
+app.get('/api/userdata', middlewares.withAuth, async (req, res) => {
+    const { user } = req;
 
-    FinnHub.getDataFromFinnhub('/stock/exchange', null).then(result => {
-        res.json(result);
-    });
+    const foundUser = await UserService.findUserByUsername(user.username);
+
+    res.json({ firstname: foundUser.first_name, lastname: foundUser.last_name, balance: foundUser.balance });
 });
 
 app.use((req, res, next) => {

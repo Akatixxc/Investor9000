@@ -1,85 +1,131 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { withSnackbar } from 'notistack';
+import moment from 'moment';
 import { get } from '../api/apiHelper';
-import history from './history';
 import './index.css';
 import Header from './Header';
 import User from './User';
 import Sharetable from './Sharetable';
 import Market from './Market';
-import Increment from './Increment';
+import { parseResponseError, numberFormat } from '../helpers/helpers';
 
-const user = {
-    firstname: 'Sampo',
-    lastname: 'Sijoittaja',
-    date: '24.03.2020',
-    capital: 'Pääoma',
-    amount: '8900 €',
-    progress: 'Kehitys',
-    percent: '-3,14 %',
-    balance: 'Saldo',
-    bamount: '680 €',
-};
-
-const company = {
-    name: 'Yritys X',
-    price: 23.55,
-    percent: -15.2,
-};
-
-export default class StockExhanges extends Component {
+class StockExhanges extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            firstname: '',
+            lastname: '',
+            balance: 0,
+            capital: 0,
+            development: 0,
+            stocks: [],
+            shares: [],
+        };
+
+        this.countCapitalAndDevelopment = this.countCapitalAndDevelopment.bind(this);
+        this.fetchDataFromBackend = this.fetchDataFromBackend.bind(this);
+        this.updateState = this.updateState.bind(this);
     }
 
-    componentDidMount() {}
+    async componentDidMount() {
+        await this.fetchDataFromBackend();
+        this.countCapitalAndDevelopment();
+    }
+
+    fetchDataFromBackend = async () => {
+        await Promise.all([
+            get('/api/userData', null, true)
+                .then(result =>
+                    this.setState({
+                        firstname: result.firstname,
+                        lastname: result.lastname,
+                        balance: result.balance,
+                    }),
+                )
+                .catch(err => {
+                    parseResponseError(err, 'Virhe hakiessa käyttäjän tietoja').then(error => console.log(error));
+                }),
+            get('/api/stocks/getStocks', null, true)
+                .then(result =>
+                    this.setState({
+                        stocks: result,
+                    }),
+                )
+                .catch(err => {
+                    parseResponseError(err, 'Virhe hakiessa tietoja osakkeista').then(error => console.log(error));
+                }),
+            get('/api/stocks/userAssets', null, true).then(result => {
+                this.setState({ shares: result });
+            }),
+        ]);
+    };
+
+    countCapitalAndDevelopment = () => {
+        const { shares, balance } = this.state;
+        let buyPriceTotal = 0;
+        let marketValueTotal = 0;
+        shares.forEach(share => {
+            buyPriceTotal += share.totalBuyPrice;
+            marketValueTotal += share.totalMarketValue;
+        });
+
+        this.setState({ capital: marketValueTotal + balance, development: (marketValueTotal / buyPriceTotal) * 100 - 100 });
+    };
+
+    updateState = async () => {
+        await this.fetchDataFromBackend();
+        this.countCapitalAndDevelopment();
+    };
+
+    countCapitalAndDevelopment = () => {
+        const { shares, balance } = this.state;
+        let buyPriceTotal = 0;
+        let marketValueTotal = 0;
+
+        shares.forEach(share => {
+            buyPriceTotal += share.totalBuyPrice;
+            marketValueTotal += share.totalMarketValue;
+        });
+
+        this.setState({ capital: marketValueTotal + balance, development: (marketValueTotal / buyPriceTotal) * 100 - 100 });
+    };
 
     render() {
+        const { firstname, lastname, balance, capital, development, stocks, shares } = this.state;
+        const today = moment().format('DD-MM-YYYY');
+
         return (
             <div>
                 <Header header="Investor9000" />
 
                 <User
-                    firstname={user.firstname}
-                    lastname={user.lastname}
-                    date={user.date}
-                    capital={user.capital}
-                    amount={user.amount}
-                    progress={user.progress}
-                    percent={user.percent}
-                    balance={user.balance}
-                    bamount={user.bamount}
+                    firstname={firstname}
+                    lastname={lastname}
+                    balance={numberFormat(balance)}
+                    date={today}
+                    capital={numberFormat(capital)}
+                    percent={numberFormat(development)}
                 />
-                <Button
-                    type="verify"
-                    variant="contained"
-                    onClick={() => {
-                        get(`/api/auth/logout`, null, true).then(history.push('/login'));
-                    }}
-                >
-                    Logout
-                </Button>
-                <Sharetable />
+                <Sharetable shares={shares} onSellStock={this.updateState} />
                 <div className="wrapper">
-                    <Market title={company.name}>
-                        <p>
-                            Hinta: {company.price} <br /> Kehitys: {company.percent}{' '}
-                        </p>
-                        <Increment min={0} max={100} />
-                        <p>5 x 23,55 € = 117,75 € </p>
-                        <button type="verify">Vahvista osto</button>
-                    </Market>
-                    <Market title={company.name}>
-                        <p>
-                            Hinta: {company.price} <br /> Kehitys: {company.percent}{' '}
-                        </p>
-                        <Increment min={0} max={100} />
-                        <p>5 x 23,55 € = 117,75 € </p>
-                        <button type="verify">Vahvista osto</button>
-                    </Market>
+                    {stocks ? (
+                        stocks.map(row => (
+                            <Market
+                                key={row.symbol}
+                                company={row.company_name}
+                                symbol={row.symbol}
+                                price={row.current_price}
+                                lastUpdated={row.timestamp}
+                                onBuyStock={this.updateState}
+                            />
+                        ))
+                    ) : (
+                        <Typography variant="h4">Loading...</Typography>
+                    )}
                 </div>
             </div>
         );
     }
 }
+export default withSnackbar(StockExhanges);

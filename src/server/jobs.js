@@ -35,7 +35,7 @@ const updatePrices = async () => {
                 FinnHub.getDataFromFinnhub('/quote', { symbol: symbols[i] })
                     .then(result => {
                         logger.trace(result);
-                        if (result.t === 0) {
+                        if (!result.t) {
                             resolve(null);
                         } else {
                             const arr = [];
@@ -135,6 +135,7 @@ const initializeDatabase = async () => {
         logger.error(`Error in creating new tables: ${err}`);
         conn.rollback();
     }
+    // FIXME: poista tämä kommentista tuotantoon mentäessä
     await updateCompanies();
 };
 

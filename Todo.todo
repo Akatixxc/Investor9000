@@ -20,6 +20,7 @@ Bugit ja outoudet:
 
 Backlog:
     ☐ JWT Tokenit eivät koskaan expiraa.
+    ☐ Pitäisikö hinta vielä kysellä finnhubista ennen ostoa/myyntiä?
 
 Toteutettavat asiat:
 
@@ -29,5 +30,7 @@ Toteutettavat asiat:
 
     ✔ Frontin ja näkymien suunnittelu @done(20-03-27 18:43)
 
-    ☐ Frontti antaa 0 feedbackkiä kirjautumisen tai rekisteröimisen epäonnistuessa
+    ✔ Frontti antaa 0 feedbackkiä kirjautumisen tai rekisteröimisen epäonnistuessa @done(20-03-30 12:44)
         - paremmannäköisiä toimintoja esim. kun salasanat eivät ole samat
+
+    ☐ Webhookki, jotta kehitys päivitttyy kun kanta päivittyy

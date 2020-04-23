@@ -1,52 +1,50 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { withSnackbar } from 'notistack';
+import { post } from '../api/apiHelper';
+import { parseResponseError, numberFormat } from '../helpers/helpers';
 import './index.css';
 
 // Käyttäjän omat sijoitukset
-class Table extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            shares: [
-                { nimi: 'Sampo', määrä: 15, arvo: 219, tuotto: 4.17, myy: 'Myy' },
-                { nimi: 'Nordea', määrä: 20, arvo: 189, tuotto: -3.19, myy: 'Myy' },
-                { nimi: 'Fortum', määrä: 100, arvo: 916, tuotto: -8.9, myy: 'Myy' },
-                { nimi: 'Yritys X', määrä: 89, arvo: 725, tuotto: 0.63, myy: 'Myy' },
-            ],
-        };
-    }
-
-    renderTableData() {
-        return this.state.shares.map((share, index) => {
-            const { määrä, nimi, arvo, tuotto, myy } = share;
-            return (
-                <tr key={nimi}>
-                    <td>{nimi}</td>
-                    <td>{määrä}</td>
-                    <td>{arvo}</td>
-                    <td>{tuotto}</td>
-                    <td>
-                        <button type="sell">{myy}</button>
-                    </td>
-                </tr>
-            );
-        });
-    }
-
-    renderTableHeader() {
-        const header = Object.keys(this.state.shares[0]);
-        return header.map((key, index) => {
-            return <th key={index}>{key.toUpperCase()}</th>;
-        });
+class Table extends PureComponent {
+    sellStock(symbol, company) {
+        const { enqueueSnackbar, onSellStock } = this.props;
+        post('/api/stocks/sell', { body: JSON.stringify({ symbol }) }, true)
+            .then(() => {
+                enqueueSnackbar(`Yrityksen ${company} osakkeet myyty onnistuneesti`, { variant: 'success' });
+                onSellStock();
+            })
+            .catch(err => {
+                parseResponseError(err, 'Virhe osakkeen myynnissä').then(error => enqueueSnackbar(error.message, { variant: 'error' }));
+            });
     }
 
     render() {
+        const { shares } = this.props;
+
         return (
             <div>
-                <h1 id="title">Oma sijoitukset</h1>
+                <h1 id="title">Omat sijoitukset</h1>
                 <table id="shares">
                     <tbody>
-                        <tr>{this.renderTableHeader()}</tr>
-                        {this.renderTableData()}
+                        <tr>
+                            <th>NIMI</th>
+                            <th>MÄÄRÄ</th>
+                            <th>ARVO</th>
+                            <th>TUOTTO</th>
+                        </tr>
+                        {shares.map(row => (
+                            <tr key={row.symbol}>
+                                <td>{row.name}</td>
+                                <td>{row.count}</td>
+                                <td>{numberFormat(row.totalMarketValue)} €</td>
+                                <td>{numberFormat(row.profitPrecentage)} %</td>
+                                <td>
+                                    <button id="sell" type="submit" onClick={() => this.sellStock(row.symbol, row.name)}>
+                                        Myy
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
@@ -54,4 +52,4 @@ class Table extends Component {
     }
 }
 
-export default Table;
+export default withSnackbar(Table);

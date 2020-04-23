@@ -1,4 +1,12 @@
 import React from 'react';
+import moment from 'moment';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { withSnackbar } from 'notistack';
+import Increment from './Increment';
+
+import { post } from '../api/apiHelper';
+import { parseResponseError, numberFormat } from '../helpers/helpers';
 
 const PlusIcon = () => {
     return (
@@ -45,10 +53,16 @@ class Panel extends React.Component {
 
         this.state = {
             isExpanded: props.openDefault,
+            stockCount: 1,
         };
 
         this.handleToggle = this.handleToggle.bind(this);
+        this.buyStock = this.buyStock.bind(this);
     }
+
+    updateStockCount = value => {
+        this.setState({ stockCount: value });
+    };
 
     handleToggle() {
         const { isExpanded } = this.state;
@@ -57,18 +71,44 @@ class Panel extends React.Component {
         });
     }
 
+    buyStock() {
+        const { symbol, company, enqueueSnackbar, onBuyStock } = this.props;
+        const { stockCount } = this.state;
+        post('/api/stocks/buy', { body: JSON.stringify({ symbol, stockCount }) }, true)
+            .then(() => {
+                enqueueSnackbar(`${stockCount} osaketta yritykseltä ${company} ostettu onnistuneesti`, { variant: 'success' });
+                onBuyStock();
+            })
+            .catch(err => {
+                parseResponseError(err, 'Virhe ostaessa osaketta').then(error => enqueueSnackbar(error.message, { variant: 'error' }));
+            });
+    }
+
     render() {
-        const { isExpanded } = this.state;
-        const { children, title } = this.props;
+        const { isExpanded, stockCount } = this.state;
+        const { company, price, lastUpdated } = this.props;
+        const date = moment(lastUpdated);
+        const formprice = numberFormat(price);
         return (
             <div className="panel">
                 <PanelHeader handleToggle={this.handleToggle} isExpanded={isExpanded}>
-                    {title}
+                    {company}
                 </PanelHeader>
-                <PanelBody isExpanded={!isExpanded}>{children}</PanelBody>
+                <PanelBody isExpanded={!isExpanded}>
+                    <Typography component="h5">
+                        Hinta: {formprice} € <br /> Viimeksi päivitetty: {date.format('DD-MM-YYYY HH:mm')}
+                    </Typography>
+                    <Increment min={1} max={100} onChangeStockCount={this.updateStockCount} />
+                    <Typography component="h5">
+                        {stockCount} x {formprice} € = {numberFormat(stockCount * formprice)} €
+                    </Typography>
+                    <Button id="verify" type="submit" onClick={this.buyStock}>
+                        Vahvista osto
+                    </Button>
+                </PanelBody>
             </div>
         );
     }
 }
 
-export default Panel;
+export default withSnackbar(Panel);
