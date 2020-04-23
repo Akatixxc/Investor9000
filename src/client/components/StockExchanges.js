@@ -46,7 +46,7 @@ class StockExhanges extends Component {
                 .catch(err => {
                     parseResponseError(err, 'Virhe hakiessa käyttäjän tietoja').then(error => console.log(error));
                 }),
-            get('/api/stocks', null, true)
+            get('/api/stocks/getStocks', null, true)
                 .then(result =>
                     this.setState({
                         stocks: result,
@@ -87,8 +87,6 @@ class StockExhanges extends Component {
             buyPriceTotal += share.totalBuyPrice;
             marketValueTotal += share.totalMarketValue;
         });
-
-        console.log(shares);
 
         this.setState({ capital: marketValueTotal + balance, development: (marketValueTotal / buyPriceTotal) * 100 - 100 });
     };
