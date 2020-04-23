@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+const https = require('https');
+const fs = require('fs');
 const express = require('express');
 
 const bodyParser = require('body-parser');
@@ -43,3 +45,19 @@ app.use((err, req, res, _next) => {
 });
 
 app.listen(process.env.PORT || 8080, () => logger.info(`Listening on port ${process.env.PORT || 8080}!`));
+
+if (process.env.NODE_ENV === 'production') {
+    https
+        .createServer(
+            {
+                key: fs.readFileSync(process.env.KEYPATH),
+                cert: fs.readFileSync(process.env.CERTPATH),
+            },
+            app,
+        )
+        .listen(process.env.PORT, () => {
+            logger.info(`Express HTTPS server running`);
+        });
+} else {
+    app.listen(process.env.PORT || 8080, () => logger.info(`Listening on port ${process.env.PORT || 8080}!`));
+}
