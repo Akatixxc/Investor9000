@@ -203,3 +203,16 @@ Ilta oli kuin morsian, kevät aurinko oli laskaeutumassa horisontin tuolle puole
 -   Mahdollinen ongelma ilmeni kannan kanssa, pool vuotaa connectioneja jostain
 -   Andreas teki uuden logon sovellukselle
 -   Tästä eteenpäin kehitetään fronttia näyttämään paremmalta sekä keksitään uutta ja parannettavaa sovellukseen
+
+23.4
+-   Pienen tauon jälkeen palattiin sorvin ääreen.
+-   Hankimme sovellukselle domain namen investor9000.tech
+-   Veimme sovelluksen Amazonin AWS pilveen
+-   Sovelluksella on Let's encryptin SSL sertifikaatti
+   
+-   Lisäksi lisäsimme CI testit gitlabiin, ja muutaman esimerkkitestin.
+
+-   Milla on saanut raportin valmiiksi ja viimeistelimme esityksen.
+
+-   Viikonlopun aikana kaikki voivat vielä tehdä muutoksia ja viimeistelyjä sovellukseen.
+
