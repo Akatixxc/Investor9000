@@ -3,7 +3,7 @@ import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withSnackbar } from 'notistack';
-import Increment from './Increment';
+import InputNumber from './InputNumber';
 
 import { post } from '../api/apiHelper';
 import { parseResponseError, numberFormat } from '../helpers/helpers';
@@ -53,7 +53,7 @@ class Panel extends React.Component {
 
         this.state = {
             isExpanded: props.openDefault,
-            stockCount: 1,
+            stockCount: 50,
         };
 
         this.handleToggle = this.handleToggle.bind(this);
@@ -74,14 +74,20 @@ class Panel extends React.Component {
     buyStock() {
         const { symbol, company, enqueueSnackbar, onBuyStock } = this.props;
         const { stockCount } = this.state;
-        post('/api/stocks/buy', { body: JSON.stringify({ symbol, stockCount }) }, true)
-            .then(() => {
-                enqueueSnackbar(`${stockCount} osaketta yritykseltä ${company} ostettu onnistuneesti`, { variant: 'success' });
-                onBuyStock();
-            })
-            .catch(err => {
-                parseResponseError(err, 'Virhe ostaessa osaketta').then(error => enqueueSnackbar(error.message, { variant: 'error' }));
-            });
+
+        // eslint-disable-next-line no-restricted-globals
+        if (isNaN(stockCount) || stockCount === '') {
+            enqueueSnackbar(`Virhe syötteessä ${stockCount}`, { variant: 'error' });
+        } else {
+            post('/api/stocks/buy', { body: JSON.stringify({ symbol, stockCount }) }, true)
+                .then(() => {
+                    enqueueSnackbar(`${stockCount} osaketta yritykseltä ${company} ostettu onnistuneesti`, { variant: 'success' });
+                    onBuyStock();
+                })
+                .catch(err => {
+                    parseResponseError(err, 'Virhe ostaessa osaketta').then(error => enqueueSnackbar(error.message, { variant: 'error' }));
+                });
+        }
     }
 
     render() {
@@ -98,7 +104,7 @@ class Panel extends React.Component {
                     <Typography component="h5">
                         Hinta: {formprice} € <br /> Viimeksi päivitetty: {date.format('DD-MM-YYYY HH:mm')}
                     </Typography>
-                    <Increment min={1} max={100} onChangeStockCount={this.updateStockCount} />
+                    <InputNumber min={1} max={500} amount={stockCount} onChangeStockCount={this.updateStockCount} />
                     <Typography component="h5">
                         {stockCount} x {formprice} € = {numberFormat(stockCount * formprice)} €
                     </Typography>
