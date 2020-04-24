@@ -76,25 +76,9 @@ const sellStock = async (username, symbol) => {
     }
 };
 
-const getUserAssets = async username => {
-    let conn;
-    let queryResults = [];
-    try {
-        conn = await pool.getConnection();
-        queryResults = await conn.query(
-            'SELECT company_symbol, bought_stocks.company_name, stock_count, price, current_price FROM bought_stocks, stock_prices WHERE symbol = company_symbol AND username = ?;',
-            [username],
-        );
-    } catch (err) {
-        logger.error(`Error in getting user assets`);
-        throw new Error(`Error in getting user assets ${err}`);
-    } finally {
-        if (conn) {
-            conn.end();
-        }
-    }
-
+const countTotalValues = queryResults => {
     const assets = [];
+
     queryResults.forEach(queryResult => {
         const { company_symbol: symbol, company_name: name, stock_count: count, current_price: currentPrice, price } = queryResult;
 
@@ -122,4 +106,27 @@ const getUserAssets = async username => {
     return assets;
 };
 
-module.exports = { getStocksFromDatabase, buyStock, sellStock, getUserAssets };
+const getUserAssets = async username => {
+    let conn;
+    let queryResults = [];
+    try {
+        conn = await pool.getConnection();
+        queryResults = await conn.query(
+            'SELECT company_symbol, bought_stocks.company_name, stock_count, price, current_price FROM bought_stocks, stock_prices WHERE symbol = company_symbol AND username = ?;',
+            [username],
+        );
+    } catch (err) {
+        logger.error(`Error in getting user assets`);
+        throw new Error(`Error in getting user assets ${err}`);
+    } finally {
+        if (conn) {
+            conn.end();
+        }
+    }
+
+    const assets = countTotalValues(queryResults);
+
+    return assets;
+};
+
+module.exports = { getStocksFromDatabase, buyStock, sellStock, getUserAssets, countTotalValues };

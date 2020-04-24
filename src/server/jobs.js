@@ -66,6 +66,10 @@ const updatePrices = async () => {
     } catch (err) {
         logger.error(`Error in inserting stock prices to the database: ${err}`);
         conn.rollback(); // errortarkistus
+    } finally {
+        if (conn) {
+            conn.end();
+        }
     }
     logger.info('Done');
 };
@@ -98,6 +102,10 @@ const updateCompanies = async () => {
     } catch (err) {
         logger.error(`Error in inserting companies to the database: ${err}`);
         conn.rollback(); // errortarkistus
+    } finally {
+        if (conn) {
+            conn.end();
+        }
     }
     logger.info(`${fetchedCompanies.length} companies in databse: ${newCompanies.length} New, ${oldCompanies.length} Old, ${outdatedCompanies.length} deleted`);
     updatePrices();
@@ -130,12 +138,15 @@ const initializeDatabase = async () => {
             INDEX FK_bought_stocks_users (username) USING BTREE,
             CONSTRAINT FK_bought_stocks_users FOREIGN KEY (username) REFERENCES investor.users (username) ON UPDATE RESTRICT ON DELETE RESTRICT
         )`);
-        conn.end();
     } catch (err) {
         logger.error(`Error in creating new tables: ${err}`);
         conn.rollback();
+    } finally {
+        if (conn) {
+            conn.end();
+        }
     }
-    // FIXME: poista tämä kommentista tuotantoon mentäessä
+
     await updateCompanies();
 };
 

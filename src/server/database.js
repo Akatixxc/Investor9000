@@ -2,7 +2,7 @@ const maria = require('mariadb');
 const config = require('./config/config');
 
 const pool = maria.createPool({
-    connectionLimit: 20,
+    connectionLimit: 100,
     host: config.database.host,
     user: config.database.user,
     password: config.database.password,
