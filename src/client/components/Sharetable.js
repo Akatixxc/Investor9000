@@ -47,6 +47,7 @@ const useStyles = makeStyles({
         border: 'none',
         borderRadius: '3px',
         cursor: 'pointer',
+        float: 'right',
         '&:hover': {
             backgroundColor: '#489c4b',
         },

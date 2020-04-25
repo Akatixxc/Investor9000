@@ -53,7 +53,7 @@ function Login() {
                 <br />
                 <TextField type="password" id="password" name="password" label="Salasana" value={password} onChange={handleChange} />
                 <br />
-                <Button type="submit" variant="contained" onClick={handleLogin}>
+                <Button type="submit" id="submit" variant="contained" onClick={handleLogin}>
                     Kirjaudu sisään
                 </Button>
                 <br />

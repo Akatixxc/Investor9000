@@ -74,7 +74,7 @@ function Register() {
                     required
                 />
                 <br />
-                <Button type="submit" variant="contained" onClick={handleRegister}>
+                <Button type="submit" id="submit" variant="contained" onClick={handleRegister}>
                     Luo tunnukset
                 </Button>
                 <Link to="/login">Kirjaudu täältä, jos sinulla on jo tunnukset</Link>
