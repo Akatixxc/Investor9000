@@ -1,5 +1,4 @@
 import React from 'react';
-import './index.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { get } from '../api/apiHelper';
@@ -7,19 +6,17 @@ import history from './history';
 
 const useStyles = makeStyles({
     user: {
-        background: '#c0c0c0',
+        background: '#d2d2d2',
         display: 'flex',
         flexDirection: 'row',
-        borderBottom: '0.1px solid black',
+        borderBottom: '1px solid #9a9a9a',
         '& p': {
-            objectFit: 'scale-down',
             margin: '1rem auto 1rem auto',
-            justifyContent: 'center',
             textAlign: 'center',
             textTransform: 'uppercase',
             fontFamily: 'Roboto',
             fontSize: '1rem',
-            letterSpacing: '0.03rem',
+            letterSpacing: '0.04rem',
             lineHeight: '1.5',
             fontWeight: '450',
             color: '#1F1F1F',
