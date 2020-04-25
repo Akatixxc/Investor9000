@@ -12,15 +12,6 @@ body {
     background: #f8f7f7;
 }
 
-section {
-    background: #c0c0c0;
-    padding: 20px;
-    display: flex;
-    flex-direction: row;
-    font-family: 'Roboto', sans-serif;
-    border: 0.1px solid black;
-}
-
 table {
     width: 100%;
     font-family: 'Roboto', sans-serif;
@@ -196,13 +187,6 @@ html * {
 img {
     width: 100%;
     display: block;
-}
-
-h1,
-h2,
-h3 {
-    margin-top: 2rem;
-    margin-bottom: 0;
 }
 
 .title {
