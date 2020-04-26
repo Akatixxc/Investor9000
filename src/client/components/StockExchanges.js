@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Typography from '@material-ui/core/Typography';
 import { withSnackbar } from 'notistack';
 import moment from 'moment';
 import { get } from '../api/apiHelper';
@@ -7,7 +6,7 @@ import './index.css';
 import Header from './Header';
 import User from './User';
 import Sharetable from './Sharetable';
-import Market from './Market';
+import MarketList from './MarketList';
 import { parseResponseError, numberFormat } from '../helpers/helpers';
 
 class StockExhanges extends Component {
@@ -108,22 +107,7 @@ class StockExhanges extends Component {
                     percent={numberFormat(development)}
                 />
                 <Sharetable shares={shares} onSellStock={this.updateState} />
-                <div className="wrapper">
-                    {stocks ? (
-                        stocks.map(row => (
-                            <Market
-                                key={row.symbol}
-                                company={row.company_name}
-                                symbol={row.symbol}
-                                price={row.current_price}
-                                lastUpdated={row.timestamp}
-                                onBuyStock={this.updateState}
-                            />
-                        ))
-                    ) : (
-                        <Typography variant="h4">Loading...</Typography>
-                    )}
-                </div>
+                <MarketList stocks={stocks} onBuyStock={this.updateState} />
             </div>
         );
     }

@@ -8,6 +8,7 @@ const useStyles = makeStyles({
         height: '100%',
         padding: '10px',
         objectFit: 'scale-down',
+        boxSizing: 'border-box',
     },
     header: {
         position: 'fixed',

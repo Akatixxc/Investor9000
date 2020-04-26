@@ -14,13 +14,6 @@ const useStyles = makeStyles({
         fontWeight: '300',
         color: '#1F1F1F',
     },
-    sharetableLine: {
-        margin: '0',
-        borderBottom: '1px solid #9a9a9a',
-    },
-    sharetableHr: {
-        margin: '0',
-    },
     sharetableTable: {
         width: '100%',
         maxWidth: '1200px',
@@ -73,7 +66,6 @@ const Table = props => {
     return (
         <div>
             <h1 className={classes.sharetableHeader}>Omat sijoitukset</h1>
-            <div className={classes.sharetableLine} />
             <table className={classes.sharetableTable}>
                 <tbody>
                     <tr>

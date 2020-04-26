@@ -6,7 +6,7 @@ import history from './history';
 
 const useStyles = makeStyles({
     user: {
-        background: '#d2d2d2',
+        background: '#e0e0e0',
         display: 'flex',
         flexDirection: 'row',
         borderBottom: '1px solid #9a9a9a',
@@ -23,6 +23,7 @@ const useStyles = makeStyles({
         },
         '& button': {
             margin: '1rem auto 1rem auto',
+            background: '#d9d9d9',
         },
     },
 });
