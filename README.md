@@ -1,6 +1,19 @@
 # Soveltava projekti, Rasmus Haavisto, Andreas Säilä, Milla Sipilä
 
-# Sovellus on livenä osoitteessa https://investor9000.tech/
+# Sovellus oli livenä osoitteessa https://investor9000.tech/
+
+# Kuvia
+
+Kirjautumissivu
+
+<img src="https://i.imgur.com/CZVo2DU.jpg" alt="Login" width="800"/>
+
+Päänäkymä
+
+<img src="https://i.imgur.com/LM2oBAe.jpg" alt="Main" width="800"/>
+
+<img src="https://i.imgur.com/Bgx449g.jpg" alt="Main2" width="800"/>
+
 
 ## Vaaditut VSCode plugarit
 
